@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import {fetchProject, fetchProjects, createProject, deleteProject, updateProject} from './ProjectAPI'
+import {projectService} from './ProjectAPI'
 import ProjectTable from './ProjectTable'
 import ProjectCreateDialogue from './ProjectCreateDialogue'
 
@@ -16,7 +16,7 @@ class ProjectContainer extends Component {
     _.get(_.last(projects), 'id', 0) + 1
 
     create = (title, description) => {
-        createProject({title, description})
+        projectService.create({title, description})
         .then(response => {
           if(response.ok) {
             return response.json()
@@ -28,7 +28,7 @@ class ProjectContainer extends Component {
     }
 
     update = project => {
-       updateProject(project)
+      projectService.update(project)
           .then(response => {
               if (response.ok) {
                   console.log('ok');
@@ -41,7 +41,7 @@ class ProjectContainer extends Component {
     }
 
     _delete = id => {
-      deleteProject(id)
+      projectService.remove(id)
           .then(response => {
               if (response.ok) {
                   this.setState({ ps: _.reject(this.state.ps, { id: id }) })
@@ -54,10 +54,10 @@ class ProjectContainer extends Component {
     }
 
     componentDidMount() {
-        fetch(this.props.serverUrl)
-            .then(response => response.json())
-            .then(projects => this.setState({ ps: projects }))
-            .catch(error => console.error(error))
+      projectService.getAll()
+        .then(response => response)
+        .then(projects => this.setState({ ps: projects }))
+        .catch(error => console.error(error))
     }
 
     render() {

@@ -1,5 +1,8 @@
 import React, {Component} from "react";
 import './Header.css';
+
+import { authenticationService} from './../../Services/Authentication.service'
+import { history } from './../../Helpers/History'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
 class Header extends Component {
@@ -17,6 +20,11 @@ class Header extends Component {
       collapsed: !this.state.collapsed
     });
   }
+
+  logout() {
+      authenticationService.logout();
+      history.push('/login');
+  }
   render() {
     return (
       <div>
@@ -32,7 +40,7 @@ class Header extends Component {
                 <NavLink href="/employees/">Employees</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/logout/">logout</NavLink>
+                <NavLink href="/logout/" onClick={this.logout}>logout</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

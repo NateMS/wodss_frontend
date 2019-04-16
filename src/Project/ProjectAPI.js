@@ -1,72 +1,41 @@
-import axios from "axios";
+import { authHeader } from '../Helpers/AuthHeader';
+import { handleResponse } from '../Helpers/HandleResponse';
+import { getUrl } from '../Services/API.service';
 
-export const FETCH_PROJECTS = 'FETCH_PROJECTS';
-export const CREATE_PROJECT = 'CREATE_PROJECT';
-export const FETCH_PROJECT = 'FETCH_PROJECT';
-export const DELETE_PROJECT = 'DELETE_PROJECT';
-const ENDPOINT = 'project';
-const SERVER_URL = 'http://localhost:3090/api';
+const url = getUrl();
 
+export const projectService = {
+    getAll,
+    get,
+    create,
+    update,
+    remove
+};
 
-export function fetchProjects() {
-    const request = axios.get(`${SERVER_URL}/${ENDPOINT}/`, {
-        headers: { authorization: localStorage.getItem('token') }
-    })
-    return {
-        type: FETCH_PROJECTS,
-        payload: request
-    }
+function getAll() {
+    const requestOptions = { method: 'GET', headers: authHeader() };
+    return fetch(`${url}/project`, requestOptions).then(handleResponse);
+}
+function get(project) {
+
 }
 
-export function updateProject(props) {
-    const request = axios.post(`${SERVER_URL}/${ENDPOINT}/${props.id}`, {
-        headers: { authorization: localStorage.getItem('token') },
-        props
-    });
-
-    return {
-        type: CREATE_PROJECT,
-        payload: request
-    };
+function create(project) {
+    const requestOptions = { method: 'PUT', headers: authHeader(), body: {
+        "name": "IP5: Distributed IOT systems",
+        "ftePercentage": 1500,
+        "startDate": "2019-03-13",
+        "endDate": "2019-06-13",
+        "projectManagerId": "5"
+      }};
+    console.log(requestOptions);
+    return fetch(`${url}/project`, requestOptions).then(handleResponse);
 }
 
-export function createProject(props, cb) {
-    const request = axios.post(`${SERVER_URL}/${ENDPOINT}`, {
-        headers: { authorization: localStorage.getItem('token') },
-        props
-    }).then(res => {
-        cb();
-        return res;
-    });
+function update(project) {
 
-    return {
-        type: CREATE_PROJECT,
-        payload: request
-    };
 }
 
-export function fetchProject(id) {
-    const request = axios.get(`${SERVER_URL}/${ENDPOINT}/${id}`, {
-        headers: { authorization: localStorage.getItem('token') }
-    })
-
-    return {
-        type: FETCH_PROJECT,
-        payload: request
-    }
-}
-
-export function deleteProject(id, cb) {
-    const request = axios.delete(`${SERVER_URL}/${ENDPOINT}/${id}`, {
-            headers: { authorization: localStorage.getItem('token') }
-        })
-        .then(res => {
-            cb();
-            return res;
-        });
-
-    return {
-        type: DELETE_PROJECT,
-        payload: request
-    }
+function remove(project) {
+    
 }

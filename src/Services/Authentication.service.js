@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 
+import jwt_decode from 'jwt-decode';
 import { handleResponse } from './../Helpers/HandleResponse';
 import { getUrl } from './API.service';
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
@@ -25,8 +26,10 @@ export function login(email, password) {
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            currentUserSubject.next(user);
+            let decoded = jwt_decode(user.token);
+            let item = JSON.stringify({decoded: decoded.employee, token: user.token});
+            localStorage.setItem('currentUser', item);
+            currentUserSubject.next(item);
 
             return user;
         });
