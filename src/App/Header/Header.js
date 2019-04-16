@@ -21,10 +21,6 @@ class Header extends Component {
     });
   }
 
-  logout() {
-      authenticationService.logout();
-      history.push('/login');
-  }
   render() {
     return (
       <div>
@@ -40,7 +36,7 @@ class Header extends Component {
                 <NavLink href="/employees/">Employees</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/logout/" onClick={this.logout}>logout</NavLink>
+                <NavLink href="/logout/">logout</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
