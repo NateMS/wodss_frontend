@@ -1,17 +1,26 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import PrivateRoute from './../../PrivateRoute'
-import AuthContainer from './../../Auth/AuthContainer';
+import { Container, Row, Col } from 'reactstrap';
+import { PrivateRoute } from './../../Components/PrivateRoute'
+import { LoginPage } from '../../LoginPage/LoginPage';
 import ProjectContainer from './../../Project/ProjectContainer';
 import EmployeeContainer from './../../Employee/EmployeeContainer';
 
 const Main = () => (
   <main>
-        <Switch>
-            <Route exact path='/' component={AuthContainer}/>
-            <PrivateRoute path='/projects' component={ProjectContainer}/>
-            <PrivateRoute path='/employees' component={EmployeeContainer}/>
-        </Switch>
+    <Container>
+        <Row>
+            <Col md="12">
+                <Switch>
+                    <Route path="/login" component={LoginPage}/>
+                    <PrivateRoute exact path='/' component={ProjectContainer}/>
+                    <PrivateRoute path='/projects' component={ProjectContainer}/>
+                    <PrivateRoute path='/employees' component={EmployeeContainer}/>
+                    
+                </Switch>
+            </Col>
+        </Row>
+    </Container>
   </main>
 )
 
