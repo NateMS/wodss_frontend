@@ -16,6 +16,7 @@ function getAll() {
     const requestOptions = { method: 'GET', headers: authHeader() };
     return fetch(`${url}/project`, requestOptions).then(handleResponse);
 }
+
 function get(project) {
 
 }
