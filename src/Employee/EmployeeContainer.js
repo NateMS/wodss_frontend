@@ -1,26 +1,57 @@
 import React, {Component} from "react";
 import _ from 'lodash';
-import {employeeService} from './EmployeeAPI'
+import { employeeService } from './EmployeeAPI'
+import { contractService } from "./Contract/ContractAPI";
 import EmployeeCreateDialogue from './EmployeeCreateDialogue'
 import EmployeeTable from './EmployeeTable'
-import EmployeeTableElement from './EmployeeTableElement'
-import { projectService } from "../Project/ProjectAPI";
-
 
 class EmployeeContainer extends Component {
 
   constructor(props){
     super(props)
-    this.state = { emps: [] }
+    this.state = { 
+      emps: [],
+    }
   }
 
+  componentDidMount() {
+    let self = this;
+    employeeService.getAll().then(
+      employees => {
+        console.log(employees)
+        this.setState({emps: employees});
+      }
+    )
+
+    let employees = _.map(this.state.emps , function(e) {
+      self.getFTE(e.id).then(fte => {
+        console.log(fte)
+        self.setState({fte: fte})
+      })
+      let fte = {fte: self.state.fte}
+      _.assign(e, fte)
+    })
+
+    console.log(employees)
+
+  }
+
+  getFTE(employeeId){
+    return contractService.getAll()
+        .then(contracts => {
+          let employeeContracts = _.filter(contracts, function(c) { return c.employeeId === employeeId; });
+          return _.sumBy(employeeContracts, function (c) { return c.pensumPercentage })
+        })
+        .catch(error => console.error(error));
+  }
+
+
   create = (employee) => {
-    projectService.create(employee)
+    employeeService.create(employee)
     .then(response =>{
           if(response.ok){
             return response.json()
           }
-          console.log(response);
           throw new Error('Network response was not ok.');
         }
       )
@@ -38,18 +69,16 @@ class EmployeeContainer extends Component {
 
   }
 
-  componentDidMount() {
-    employeeService.getAll()
-      .then(response => response)
-      .then(employees => this.setState({ emps: employees }))
-      .catch(error => console.error(error));
-    }
+
+
+
 
   render() {
+
     return <div>
       <EmployeeCreateDialogue create = { this.create } />
       <h3>Employees</h3>
-      <EmployeeTable update = { this.update } _delete = { this._delete } emps = { this.state.emps } />
+      <EmployeeTable update = { this.update } _delete = { this._delete } getFTE = { this.getFTE } emps = { this.state.emps } />
     </div>
   }
 }

@@ -30,7 +30,6 @@ export function login(email, password) {
             let item = JSON.stringify({decoded: decoded.employee, token: user.token});
             localStorage.setItem('currentUser', item);
             currentUserSubject.next(item);
-
             return user;
         });
 }

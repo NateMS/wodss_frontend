@@ -31,7 +31,6 @@ class ProjectContainer extends Component {
       projectService.update(project)
           .then(response => {
               if (response.ok) {
-                  console.log('ok');
               } else {
                   throw new Error('Network response was not ok.');
               }
@@ -45,7 +44,6 @@ class ProjectContainer extends Component {
           .then(response => {
               if (response.ok) {
                   this.setState({ ps: _.reject(this.state.ps, { id: id }) })
-                console.log('ok');
               } else {
                   throw new Error('Network response was not ok.');
               }
@@ -55,9 +53,7 @@ class ProjectContainer extends Component {
 
     componentDidMount() {
       projectService.getAll()
-        .then(response => response)
         .then(projects => this.setState({ ps: projects }))
-        .catch(error => console.error(error))
     }
 
     render() {

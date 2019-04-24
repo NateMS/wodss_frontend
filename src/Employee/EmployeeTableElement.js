@@ -1,11 +1,11 @@
 import React from 'react'
 import _ from 'lodash'
 
-const EmployeeTableElement = ({ update, _delete, employee }) => (
+const EmployeeTableElement = ({ update, _delete, fte, employee }) => (
     <tr key={ employee.id } >
-        <td>{ employee.firstName }</td>
+        <td>{ employee.firstName } { employee.lastName }</td>
         <td>{ employee.emailAddress }</td>
-        <td>{ employee.lastName }</td>
+        <td>{ fte }</td>
     </tr>
 )
 

@@ -2,7 +2,7 @@ import { authHeader } from '../Helpers/AuthHeader';
 import { handleResponse } from '../Helpers/HandleResponse';
 import { getUrl } from '../Services/API.service';
 
-const url = getUrl();
+const employeeURL = getUrl() + '/employee';
 
 export const employeeService = {
     getAll,
@@ -14,25 +14,27 @@ export const employeeService = {
 
 function getAll() {
     const requestOptions = { method: 'GET', headers: authHeader() };
-    return fetch(`${url}/employee`, requestOptions).then(handleResponse);
+    return fetch(`${employeeURL}`, requestOptions)
+            .then(handleResponse)
+            .then(employees => {
+                return employees;
+            })
+            .catch(error => console.error(error));
 }
+
 function get(employeeId) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     }
 
-
-    // return fetch(`${url}/employee/${employeeId}`, requestOptions)
-    // .then(handleResponse)
-    // .then(employee => {
-    //     return JSON.stringify(employee);
-    // })
-    // .catch(error => console.error(error));
-
-    return fetch(`${url}/employee/${employeeId}`, requestOptions).then(handleResponse);
+    return fetch(`${employeeURL}/${employeeId}`, requestOptions)
+            .then(handleResponse)
+            .then(employee => {
+                return employee;
+            })
+            .catch(error => console.error(error));
 }
-
 
 function create(employee) {
     const requestOptions = { 
@@ -41,17 +43,36 @@ function create(employee) {
         body: JSON.stringify(employee)
     };
 
-    return fetch(`${url}/employee`, requestOptions).then(handleResponse);
+    return fetch(`${employeeURL}`, requestOptions)
+            .then(handleResponse)
+            .then(employee => {
+                return employee;
+            })
+            .catch(error => console.error(error));
 }
-
-{
-
-  }
 
 function update(employee) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: authHeader(),
+        body: JSON.stringify(employee)
+    };
 
+    return fetch(`${employeeURL}/${employee.id}`, requestOptions)
+            .then(handleResponse)
+            .then(employee => {
+                return employee;
+            })
+            .catch(error => console.error(error));
 }
 
-function remove(employee) {
-    
+function remove(employeeId) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: authHeader(),
+    };
+
+    return fetch(`${employeeURL}/${employeeId}`, requestOptions)
+            .then(handleResponse)
+            .catch(error => console.error(error));
 }

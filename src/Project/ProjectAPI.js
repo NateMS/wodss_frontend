@@ -2,7 +2,7 @@ import { authHeader } from '../Helpers/AuthHeader';
 import { handleResponse } from '../Helpers/HandleResponse';
 import { getUrl } from '../Services/API.service';
 
-const url = getUrl();
+const projectURL = getUrl() + '/project';
 
 export const projectService = {
     getAll,
@@ -14,29 +14,65 @@ export const projectService = {
 
 function getAll() {
     const requestOptions = { method: 'GET', headers: authHeader() };
-    return fetch(`${url}/project`, requestOptions).then(handleResponse);
+    return fetch(`${projectURL}`, requestOptions)
+            .then(handleResponse)
+            .then(projects => {
+                return projects;
+            })
+            .catch(error => console.error(error));
 }
 
-function get(project) {
+function get(projectId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader()
+    }
 
+    return fetch(`${projectURL}/${projectId}`, requestOptions)
+            .then(handleResponse)
+            .then(project => {
+                return project;
+            })
+            .catch(error => console.error(error));
 }
 
 function create(project) {
-    const requestOptions = { method: 'PUT', headers: authHeader(), body: {
-        "name": "IP5: Distributed IOT systems",
-        "ftePercentage": 1500,
-        "startDate": "2019-03-13",
-        "endDate": "2019-06-13",
-        "projectManagerId": "5"
-      }};
-    console.log(requestOptions);
-    return fetch(`${url}/project`, requestOptions).then(handleResponse);
+    const requestOptions = { 
+        method: 'POST', 
+        headers: authHeader(), 
+        body: JSON.stringify(project)
+    };
+
+    return fetch(`${projectURL}`, requestOptions)
+            .then(handleResponse)
+            .then(project => {
+                return project;
+            })
+            .catch(error => console.error(error));
 }
 
 function update(project) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: authHeader(),
+        body: JSON.stringify(project)
+    };
 
+    return fetch(`${projectURL}/${project.id}`, requestOptions)
+            .then(handleResponse)
+            .then(project => {
+                return project;
+            })
+            .catch(error => console.error(error));
 }
 
-function remove(project) {
-    
+function remove(projectId) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: authHeader(),
+    };
+
+    return fetch(`${projectURL}/${projectId}`, requestOptions)
+            .then(handleResponse)
+            .catch(error => console.error(error));
 }
