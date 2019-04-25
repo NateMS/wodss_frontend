@@ -1,6 +1,6 @@
-import { authHeader } from '../../Helpers/AuthHeader';
-import { handleResponse } from '../../Helpers/HandleResponse';
-import { getUrl } from '../../Services/API.service';
+import { authHeader } from '../Helpers/AuthHeader';
+import { handleResponse } from '../Helpers/HandleResponse';
+import { getUrl } from '../Services/API.service';
 
 const contractURL = getUrl() + '/contract';
 

@@ -5,12 +5,14 @@ import ProjectTableElement from './ProjectTableElement'
 const ProjectTable = ({ update, _delete, ps }) => <section>
     <Table>
         <thead>
-            <th>Name</th>
-            <th>Start-Date</th>
-            <th>End-Date</th>
-            <th>Project-Manager</th>
-            <th>FTE</th>
-            <th>Actions</th>
+            <tr>
+                <th>Name</th>
+                <th>Start-Date</th>
+                <th>End-Date</th>
+                <th>Project-Manager</th>
+                <th>FTE</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
         { 

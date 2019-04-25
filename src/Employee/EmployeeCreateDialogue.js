@@ -1,30 +1,85 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Col, Input } from 'reactstrap'
+import { Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Col, Input, ButtonGroup, Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from 'reactstrap'
 
 class EmployeeCreateDialogue extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { title: '', description: '', showModal: false }
+        this.state = { 
+          firstName: '', 
+          lastName: '',
+          email: '',
+          active: false,
+          password: '',
+          rSelected: 1,
+          howModal: false, 
+          dropdownOpen: false
+        }
     }
     
+    onRadioBtnClick = (rSelected) =>{
+      this.setState({ rSelected });
+    }
+
+    onCheckboxChange = event =>{
+      this.setState({active: !this.state.active});
+    }
+
     open = () =>  {
         this.setState({ showModal: true })
     }
 
     close = () => {
-        this.setState({ title: '', description: '', showModal: false })
+      this.setState({ 
+        firstName: '', 
+        lastName: '',
+        email: '',
+        active: false,
+        role: '',    
+        showModal: false 
+      })    
     }
 
     onChange = event => {
-        // [event.target.name]: Computed property names, siehe https://mzl.la/1GIMi82
         this.setState({ [event.target.name]: event.target.value })
     }
 
     onSubmit = event => {
         event.preventDefault()
-        this.props.create(this.state.title, this.state.description)
-        this.setState({ title: '', description: '', showModal: false })
+
+        let role = ''
+
+        switch(this.state.rSelected){
+          case 1:
+            role = 'DEVELOPER'
+            break;
+          case 2:
+            role = 'PROJECTMANAGER'
+            break;
+          case 3:
+            role = 'ADMINISTRATOR'
+            break;
+          default:
+            role = 'DEVELOPER'
+        }
+
+        let employee = ({
+          active: this.state.active, 
+          firstName: this.state.firstName, 
+          lastName: this.state.lastName, 
+          emailAddress: this.state.email,
+        })
+
+        this.props.create(employee, role, this.state.password)
+        
+        this.setState({ 
+          firstname: '', 
+          lastName: '',
+          email: '',
+          active: false,
+          role: '',    
+          showModal: false 
+        })
     }
 
     render() {
@@ -61,19 +116,40 @@ class EmployeeCreateDialogue extends Component {
                        E-Mail
                      </Label>
                      <Col md={10}>
-                       <Input type="text" name="email" value={ this.state.email } id="formEmail" onChange={ this.onChange } />
+                     <Input type="email" name="email" id="formEmail" value={ this.state.email } onChange={ this.onChange } placeholder="name@domain.com" />
                      </Col>
                    </FormGroup>
 
+                   <FormGroup row>
+                     <Label md={2} for="formPassword">
+                       Password
+                     </Label>
+                     <Col md={10}>
+                     <Input type="password" name="password" id="formPassword" value={ this.state.password } onChange={ this.onChange } placeholder="password" />
+                     </Col>
+                   </FormGroup>
+
+                   <FormGroup row>
+                     <Label md={2} for="formEmail">
+                       Role
+                     </Label>
+                     <Col md={10}>
+                     <ButtonGroup>
+                        <Button color="primary" onClick={() => this.onRadioBtnClick(1)} active={this.state.rSelected === 1}>Developer</Button>
+                        <Button color="primary" onClick={() => this.onRadioBtnClick(2)} active={this.state.rSelected === 2}>Project Manager</Button>
+                        <Button color="primary" onClick={() => this.onRadioBtnClick(3)} active={this.state.rSelected === 3}>Administrator</Button>
+                      </ButtonGroup>
+                    </Col>
+                   </FormGroup>
+                   
                     <FormGroup row>
                         <Label md={2} for="formActive">
                         Active
                         </Label>
                         <Col md={10}>
-                        <Input type="checkbox" checked name="active" value={ this.state.active } id="formActive" onChange={ this.onChange } />
+                        <Input type="checkbox" name="active" id="formActive" onChange={ this.onCheckboxChange } />
                         </Col>
                     </FormGroup>
-
                    <FormGroup>
                      <Col className="clearfix" style={{ padding: '.2rem' }}>
                        <Button className="float-right" color="secondary" onClick={this.onSubmit}>Save</Button>

@@ -36,14 +36,14 @@ function get(employeeId) {
             .catch(error => console.error(error));
 }
 
-function create(employee) {
+function create(employee, role, password) {
     const requestOptions = { 
         method: 'POST', 
         headers: authHeader(), 
         body: JSON.stringify(employee)
     };
 
-    return fetch(`${employeeURL}`, requestOptions)
+    return fetch(`${employeeURL}?password=${password}&role=${role}` , requestOptions)
             .then(handleResponse)
             .then(employee => {
                 return employee;

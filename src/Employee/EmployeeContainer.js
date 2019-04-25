@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import _ from 'lodash';
-import { employeeService } from './EmployeeAPI'
-import { contractService } from "./Contract/ContractAPI";
+import { employeeService } from '../API/EmployeeAPI'
+import { contractService } from "../API/ContractAPI";
+import { allocationService } from "../API/AllocationAPI";
 import EmployeeCreateDialogue from './EmployeeCreateDialogue'
 import EmployeeTable from './EmployeeTable'
 
@@ -11,50 +12,50 @@ class EmployeeContainer extends Component {
     super(props)
     this.state = { 
       emps: [],
+      contracts: [],
+      allocations: []
     }
+    this.getFTE = this.getFTE.bind(this)
+    this.getContracts = this.getContracts.bind(this)
+    this.getAllocations = this.getAllocations.bind(this)
   }
 
   componentDidMount() {
-    let self = this;
     employeeService.getAll().then(
       employees => {
-        console.log(employees)
-        this.setState({emps: employees});
+        this.setState({emps: employees})
       }
     )
 
-    let employees = _.map(this.state.emps , function(e) {
-      self.getFTE(e.id).then(fte => {
-        console.log(fte)
-        self.setState({fte: fte})
-      })
-      let fte = {fte: self.state.fte}
-      _.assign(e, fte)
-    })
+    contractService.getAll().then(
+      contracts =>{
+        this.setState({contracts: contracts})
+      }
+    )
 
-    console.log(employees)
-
+    allocationService.getAll().then(
+      allocations => {
+        this.setState({allocations: allocations})
+      }
+    )
   }
 
   getFTE(employeeId){
-    return contractService.getAll()
-        .then(contracts => {
-          let employeeContracts = _.filter(contracts, function(c) { return c.employeeId === employeeId; });
-          return _.sumBy(employeeContracts, function (c) { return c.pensumPercentage })
-        })
-        .catch(error => console.error(error));
+    let employeeContracts = this.getContracts(employeeId)
+    return _.sumBy(employeeContracts, function (c) { return c.pensumPercentage })
   }
 
+  getContracts(employeeId){
+    return _.filter(this.state.contracts, function(c) { return c.employeeId === employeeId; })
+  }
 
-  create = (employee) => {
-    employeeService.create(employee)
-    .then(response =>{
-          if(response.ok){
-            return response.json()
-          }
-          throw new Error('Network response was not ok.');
-        }
-      )
+  getAllocations(contractId){
+    return _.filter(this.state.allocations, function(a) { return a.contractId == contractId})
+  }
+
+  create = (employee, role, password) => {
+    console.log(employee)
+    employeeService.create(employee, role, password)
     .then(employee => {
         this.setState({ emps: _.concat(this.state.emps, employee) })
       })
@@ -62,11 +63,15 @@ class EmployeeContainer extends Component {
   }
 
   update = (employee) => {
-
+    employeeService.update(employee)
+    .then(employee => {
+        this.setState({ emps: _.concat(this.state.emps, employee) })
+      })
+    .catch(error => console.error(error));
   }
 
   _delete = id => {
-
+    employeeService.remove(id)
   }
 
 
@@ -74,11 +79,10 @@ class EmployeeContainer extends Component {
 
 
   render() {
-
     return <div>
       <EmployeeCreateDialogue create = { this.create } />
       <h3>Employees</h3>
-      <EmployeeTable update = { this.update } _delete = { this._delete } getFTE = { this.getFTE } emps = { this.state.emps } />
+      <EmployeeTable update = { this.update } _delete = { this._delete } fte = { this.getFTE} emps = { this.state.emps } />
     </div>
   }
 }

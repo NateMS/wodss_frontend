@@ -2,22 +2,29 @@ import React from 'react'
 import { Table } from 'reactstrap'
 import EmployeeTableElement from './EmployeeTableElement'
 
-const EmployeeTable = ({ update, _delete, getFTE, emps }) => <section>
+const EmployeeTable = ({ update, _delete, fte, emps }) => <section>
     <Table>
         <thead>
-            <th>Name</th>
-            <th>E-Mail</th>
-            <th>FTE</th>
-            <th>Actions</th>
+            <tr>
+                <th>Name</th>
+                <th>E-Mail</th>
+                <th>FTE</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
         </thead>
         <tbody>
         { 
-            emps.map(employee =>
-                <EmployeeTableElement key={ employee.id } 
+            emps.map(employee =>{
+                if(employee.firstName !== 'ANONYMIZED' && employee.lastName !== 'ANONYMIZED'){
+                    return <EmployeeTableElement key={ employee.id } 
                                            update={ update }
                                            _delete={ _delete }
-                                           fte = { employee.fte }
-                                           employee={ employee } />) 
+                                           fte = {fte(employee.id)}
+                                        //    fte = { fte.map(fte => { if (fte.id === employee.id) return fte.employeeId}) }
+                                           employee={ employee } /> 
+                }
+            }) 
         }
         </tbody>
     </Table>

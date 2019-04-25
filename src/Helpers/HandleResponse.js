@@ -1,6 +1,7 @@
-import { authenticationService } from './../Services/Authentication.service';
+// import { authenticationService } from './../Services/Authentication.service';
 
 export function handleResponse(response) {
+    console.log(response)
     return response.json().then(data => {
         // const data = text && JSON.parse(text);
         if (!response.ok) {
@@ -9,7 +10,7 @@ export function handleResponse(response) {
             //     authenticationService.logout();
             //     window.location.reload(true);
             // }
-
+            
             const error = (data && data.error) || response.statusText;
             return Promise.reject(error);
         }

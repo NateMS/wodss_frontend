@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import {projectService} from './ProjectAPI'
+import {projectService} from '../API/ProjectAPI'
 import ProjectTable from './ProjectTable'
 import ProjectCreateDialogue from './ProjectCreateDialogue'
 
@@ -17,38 +17,18 @@ class ProjectContainer extends Component {
 
     create = (title, description) => {
         projectService.create({title, description})
-        .then(response => {
-          if(response.ok) {
-            return response.json()
-          }
-          throw new Error('Network response was not ok.');
-        })
         .then(projects => this.setState({ ps: _.concat(this.state.ps, projects) }))
         .catch(error => console.error(error))
     }
 
     update = project => {
       projectService.update(project)
-          .then(response => {
-              if (response.ok) {
-              } else {
-                  throw new Error('Network response was not ok.');
-              }
-          })
           .then(project => this.setState({ ps: _.map(this.state.ps, p => p.id === project.id ? project : p) }))
           .catch(error => console.error(error))
     }
 
     _delete = id => {
       projectService.remove(id)
-          .then(response => {
-              if (response.ok) {
-                  this.setState({ ps: _.reject(this.state.ps, { id: id }) })
-              } else {
-                  throw new Error('Network response was not ok.');
-              }
-          })
-          .catch(error => console.error(error))
     }
 
     componentDidMount() {
