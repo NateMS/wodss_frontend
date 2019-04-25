@@ -11,7 +11,10 @@ export const authenticationService = {
     login,
     logout,
     currentUser: currentUserSubject.asObservable(),
-    get currentUserValue() { return currentUserSubject.value }
+    get currentUserValue() { return currentUserSubject.value },
+    get currentUserRole() { return currentUserSubject.value.decoded.role },
+    get isAdmin() { return currentUserSubject.value.decoded.role === 'ADMINISTRATOR' },
+    get isPM(){ return currentUserSubject.value.decoded.role === 'PROJECTMANAGER' || this.isAdmin() }
 };
 
 export function login(email, password) {

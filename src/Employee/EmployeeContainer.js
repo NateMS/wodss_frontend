@@ -5,6 +5,8 @@ import { contractService } from "../API/ContractAPI";
 import { allocationService } from "../API/AllocationAPI";
 import EmployeeCreateDialogue from './EmployeeCreateDialogue'
 import EmployeeTable from './EmployeeTable'
+import {authenticationService} from '../Services/Authentication.service'
+import { Route, Redirect } from 'react-router-dom';
 
 class EmployeeContainer extends Component {
 
@@ -71,18 +73,21 @@ class EmployeeContainer extends Component {
   }
 
   _delete = id => {
+    this.setState({ emps : _.reject(this.state.emps, { id: id })})
     employeeService.remove(id)
   }
 
-
-
-
-
   render() {
+    let createDialogue
+
+    if(authenticationService.isAdmin){
+      createDialogue = <EmployeeCreateDialogue create = { this.create }/>
+    }
+
     return <div>
-      <EmployeeCreateDialogue create = { this.create } />
+      { createDialogue }
       <h3>Employees</h3>
-      <EmployeeTable update = { this.update } _delete = { this._delete } fte = { this.getFTE} emps = { this.state.emps } />
+      <EmployeeTable update = { this.update } _delete = { this._delete } fte = { this.getFTE} emps = { this.state.emps } contracts = { this.state.contracts } allocations = { this.state.allocations }/>
     </div>
   }
 }
