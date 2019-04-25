@@ -12,9 +12,13 @@ export const contractService = {
     remove
 };
 
-function getAll() {
+function getAll(fromDate, toDate) {
+    let url = contractURL + '?'
+    if (fromDate) url += `&fromDate=${fromDate}`
+    if (toDate) url += `&toDate=${toDate}`
+
     const requestOptions = { method: 'GET', headers: authHeader() };
-    return fetch(`${contractURL}`, requestOptions)
+    return fetch(url, requestOptions)
             .then(handleResponse)
             .then(contracts => {
                 return contracts;

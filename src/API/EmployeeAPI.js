@@ -12,7 +12,10 @@ export const employeeService = {
     remove
 };
 
-function getAll() {
+function getAll(role) {
+    let url = employeeURL + '?'
+    if (role) url += `&role=${role}`
+
     const requestOptions = { method: 'GET', headers: authHeader() };
     return fetch(`${employeeURL}`, requestOptions)
             .then(handleResponse)
@@ -43,7 +46,7 @@ function create(employee, role, password) {
         body: JSON.stringify(employee)
     };
 
-    return fetch(`${employeeURL}?password=${password}&role=${role}` , requestOptions)
+    return fetch(`${employeeURL}?password=${password}&role=${role}`, requestOptions)
             .then(handleResponse)
             .then(employee => {
                 return employee;

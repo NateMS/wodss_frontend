@@ -12,9 +12,14 @@ export const projectService = {
     remove
 };
 
-function getAll() {
+function getAll(projectManagerId, fromDate, toDate) {
+    let url = projectURL + '?'
+    if (projectManagerId) url += `&projectManagerId=${projectManagerId}`
+    if (fromDate) url += `&fromDate=${fromDate}`
+    if (toDate) url += `&toDate=${toDate}`
+
     const requestOptions = { method: 'GET', headers: authHeader() };
-    return fetch(`${projectURL}`, requestOptions)
+    return fetch(url, requestOptions)
             .then(handleResponse)
             .then(projects => {
                 return projects;

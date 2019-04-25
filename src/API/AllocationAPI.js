@@ -12,9 +12,15 @@ export const allocationService = {
     remove
 };
 
-function getAll() {
+function getAll(employeeId, projectId, fromDate, toDate) {
+    let url = allocationURL + '?'
+    if (employeeId) url += `&employeeId=${employeeId}`
+    if (projectId) url += `&projectId=${projectId}`
+    if (fromDate) url += `&fromDate=${fromDate}`
+    if (toDate) url += `&toDate=${toDate}`
+
     const requestOptions = { method: 'GET', headers: authHeader() };
-    return fetch(`${allocationURL}`, requestOptions)
+    return fetch(url, requestOptions)
             .then(handleResponse)
             .then(allocations => {
                 return allocations;
