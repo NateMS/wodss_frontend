@@ -50,10 +50,6 @@ function create(project) {
 
     return fetch(`${projectURL}`, requestOptions)
             .then(handleResponse)
-            .then(project => {
-                return project;
-            })
-            .catch(error => console.error(error));
 }
 
 function update(project) {

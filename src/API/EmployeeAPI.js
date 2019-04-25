@@ -17,12 +17,12 @@ function getAll(role) {
     if (role) url += `&role=${role}`
 
     const requestOptions = { method: 'GET', headers: authHeader() };
-    return fetch(`${employeeURL}`, requestOptions)
-            .then(handleResponse)
-            .then(employees => {
-                return employees;
-            })
-            .catch(error => console.error(error));
+    return fetch(url, requestOptions)
+        .then(handleResponse)
+        .then(employees => {
+            return employees
+        })
+        .catch(error => console.error(error))
 }
 
 function get(employeeId) {
@@ -32,26 +32,26 @@ function get(employeeId) {
     }
 
     return fetch(`${employeeURL}/${employeeId}`, requestOptions)
-            .then(handleResponse)
-            .then(employee => {
-                return employee;
-            })
-            .catch(error => console.error(error));
+        .then(handleResponse)
+        .then(employee => {
+            return employee;
+        })
+        .catch(error => console.error(error));
 }
 
 function create(employee, role, password) {
-    const requestOptions = { 
-        method: 'POST', 
-        headers: authHeader(), 
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
         body: JSON.stringify(employee)
     };
 
     return fetch(`${employeeURL}?password=${password}&role=${role}`, requestOptions)
-            .then(handleResponse)
-            .then(employee => {
-                return employee;
-            })
-            .catch(error => console.error(error));
+        .then(handleResponse)
+        .then(employee => {
+            return employee;
+        })
+        .catch(error => console.error(error));
 }
 
 function update(employee) {
@@ -62,11 +62,11 @@ function update(employee) {
     };
 
     return fetch(`${employeeURL}/${employee.id}`, requestOptions)
-            .then(handleResponse)
-            .then(employee => {
-                return employee;
-            })
-            .catch(error => console.error(error));
+        .then(handleResponse)
+        .then(employee => {
+            return employee;
+        })
+        .catch(error => console.error(error));
 }
 
 function remove(employeeId) {
@@ -76,6 +76,6 @@ function remove(employeeId) {
     };
 
     return fetch(`${employeeURL}/${employeeId}`, requestOptions)
-            .then(handleResponse)
-            .catch(error => console.error(error));
+        .then(handleResponse)
+        .catch(error => console.error(error));
 }

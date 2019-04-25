@@ -32,8 +32,8 @@ class ProjectUpdateDialog extends Component {
 
     render() {
         return (
-          <div>
-            <Button color="primary" onClick={this.open} className='float-right' >Edit</Button>
+          <span>
+            <Button color="primary" onClick={this.open} className='float-left' >Edit</Button>
             <Modal isOpen={this.state.showModal} toggle={this.close} size="lg" 
                         autoFocus={false}>
               <ModalHeader toggle={this.close} >
@@ -67,7 +67,7 @@ class ProjectUpdateDialog extends Component {
                  </Form>
               </ModalBody>
             </Modal>
-          </div>
+          </span>
         )
       }    
 }

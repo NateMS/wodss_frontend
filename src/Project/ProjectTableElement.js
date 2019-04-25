@@ -13,7 +13,7 @@ const ProjectTableElement = ({ update, _delete, project }) => (
         <td>{ project.ftePercentage }</td>
         <td><ProjectShowDialogue project={ project } />
         <ProjectUpdateDialogue update={ update } project={ project } />
-        <Button color='danger' onClick={ _.partial(_delete, project.id) } className='float-right' >Delete</Button></td>
+        <span><Button color='danger' onClick={ _.partial(_delete, project.id) } className='float-left' >Delete</Button></span></td>
     </tr>
 )
 

@@ -18,8 +18,8 @@ class LoginPage extends React.Component {
         return (
             <div>
                 <div className="alert alert-info">
-                    email: admin@wodss.fhnw.ch<br />
-                    Password: secret
+                    admin@wodss.fhnw.ch<br />
+                    secret
                 </div>
                 <h2>Login</h2>
                 <Formik
