@@ -5,6 +5,7 @@ import { PrivateRoute } from './../../Components/PrivateRoute'
 import { LoginPage } from '../../LoginPage/LoginPage';
 import ProjectContainer from './../../Project/ProjectContainer';
 import EmployeeContainer from './../../Employee/EmployeeContainer';
+import './Main.css';
 
 const Main = () => (
   <main>

@@ -46,10 +46,6 @@ class ProjectShowDialog extends Component {
                       FTE: {this.props.project.ftePercentage}
                     </p>
                   </Col>
-                  <Col className="clearfix" style={{ padding: '.2rem' }}>
-                    <Button className="float-right" color="secondary" 
-                    onClick={this.close}>Close</Button>
-                  </Col>
                 </Row>
               </ModalBody>
             </Modal>

@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import './Header.css';
 
-import { authenticationService} from './../../Services/Authentication.service'
-import { history } from './../../Helpers/History'
+import { authenticationService } from './../../Services/Authentication.service'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
 class Header extends Component {
@@ -11,7 +10,8 @@ class Header extends Component {
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
-      collapsed: true
+      collapsed: true,
+      name: authenticationService.currentUserValue.decoded.firstName + " " + authenticationService.currentUserValue.decoded.lastName
     };
   }
 
@@ -22,21 +22,28 @@ class Header extends Component {
   }
 
   render() {
+    let employeeLink = '';
+    if (authenticationService.isPM) {
+      employeeLink =  
+      <NavItem>
+        <NavLink href="/employees/">Employees</NavLink>
+      </NavItem>
+    }
     return (
       <div>
-        <Navbar light>
-          <NavbarBrand href="/" className="mr-auto">projectarr</NavbarBrand>
+        <Navbar dark color="dark" expand="md" fixed>
+          <NavbarBrand href="/">projectarr</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse isOpen={!this.state.collapsed} navbar>
-            <Nav navbar>
+            <Nav navbar className="mr-auto">
               <NavItem>
                 <NavLink href="/projects/">Projects</NavLink>
               </NavItem>
+              {employeeLink}
+            </Nav>
+            <Nav navbar>
               <NavItem>
-                <NavLink href="/employees/">Employees</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/logout/">logout</NavLink>
+                <NavLink href="/logout/">{this.state.name} (logout)</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

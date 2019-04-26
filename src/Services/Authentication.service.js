@@ -14,7 +14,7 @@ export const authenticationService = {
     get currentUserValue() { return currentUserSubject.value },
     get currentUserRole() { return currentUserSubject.value.decoded.role },
     get isAdmin() { return currentUserSubject.value.decoded.role === 'ADMINISTRATOR' },
-    get isPM(){ return currentUserSubject.value.decoded.role === 'PROJECTMANAGER' || this.isAdmin() }
+    get isPM() { return currentUserSubject.value.decoded.role === 'PROJECTMANAGER' || this.isAdmin }
 };
 
 export function login(email, password) {
@@ -30,7 +30,7 @@ export function login(email, password) {
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             let decoded = jwt_decode(user.token);
-            let item = JSON.stringify({decoded: decoded.employee, token: user.token});
+            let item = JSON.stringify({ decoded: decoded.employee, token: user.token });
             localStorage.setItem('currentUser', item);
             currentUserSubject.next(item);
             return user;
