@@ -10,7 +10,7 @@ const ProjectTableElement = ({ update, _delete, project }) => (
         <td>{ project.name }</td>
         <td>{ dateToReadable(project.startDate) }</td>
         <td>{ dateToReadable(project.endDate) }</td>
-        <td>{ project.projectManagerId }</td>
+        <td>{ project.pm.firstName + " " + project.pm.lastName }</td>
         <td>{ project.ftePercentage }</td>
         <td><ProjectShowDialogue project={ project } />
         <ProjectUpdateDialogue update={ update } project={ project } />
