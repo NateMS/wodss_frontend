@@ -54,7 +54,7 @@ class ProjectCreateDialog extends Component {
     
     return (
       <div>
-        <Button color="success" onClick={this.open} className='float-right'>Add Project</Button>
+        <Button color="success" onClick={this.open} className='float-right btn-list-btn'>Add Project</Button>
         <Modal isOpen={this.state.showModal} toggle={this.close} size="lg"
           autoFocus={false}>
           <ModalHeader toggle={this.close} >

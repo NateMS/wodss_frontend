@@ -20,7 +20,7 @@ class ProjectShowDialog extends Component {
     render() {
         return (
           <span>
-            <Button color="secondary" onClick={this.open} className='float-left'>Show</Button>
+            <Button color="secondary" onClick={this.open} className='float-left btn-list-btn'>Show</Button>
             <Modal isOpen={this.state.showModal} toggle={this.close} size="lg" 
                         autoFocus={false}>
               <ModalHeader toggle={this.close} >

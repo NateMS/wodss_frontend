@@ -53,7 +53,7 @@ class EmployeeShowDialogue extends Component {
   render() {
     return (
       <div>
-        <Button color="secondary" onClick={this.open} className='float-right' >Show</Button>
+        <Button color="secondary" onClick={this.open} className='float-right btn-list-btn' >Show</Button>
         <Modal isOpen={this.state.showModal} toggle={this.close} size="lg"
           autoFocus={false}>
           <ModalHeader toggle={this.close} >

@@ -17,7 +17,7 @@ class EmployeeTableElement extends Component {
 
         if(authenticationService.isAdmin){
             viewEditDialogue = <EmployeeUpdateDialogue update={ this.props.update } employee={ this.props.employee } fte={this.props.fte} contracts = {this.props.contracts} allocations = { this.props.allocations } />        
-            deleteButton = <Button color='danger' onClick={ _.partial(this.props._delete, this.props.employee.id) } className='float-right' >Delete</Button>
+            deleteButton = <Button color='danger' onClick={ _.partial(this.props._delete, this.props.employee.id) } className='float-right btn-list-btn' >Delete</Button>
         } else {
             viewEditDialogue = <EmployeeShowDialogue employee={ this.props.employee } fte={this.props.fte} contracts = {this.props.contracts} allocations = { this.props.allocations } />        
         }

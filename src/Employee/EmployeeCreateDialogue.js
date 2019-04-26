@@ -85,7 +85,7 @@ class EmployeeCreateDialogue extends Component {
     render() {
         return (
           <div>
-            <Button color="success" onClick={this.open} className='float-right'>Add Employee</Button>
+            <Button color="success" onClick={this.open} className='float-right btn-list-btn'>Add Employee</Button>
             <Modal isOpen={this.state.showModal} toggle={this.close} size="lg" 
                         autoFocus={false}>
               <ModalHeader toggle={this.close} >

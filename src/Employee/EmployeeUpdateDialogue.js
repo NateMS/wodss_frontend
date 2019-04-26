@@ -80,7 +80,7 @@ class EmployeeUpdateDialogue extends Component {
   render() {
     return (
       <div>
-        <Button color="primary" onClick={this.open} className='float-right' >Edit</Button>
+        <Button color="primary" onClick={this.open} className='float-right btn-list-btn' >Edit</Button>
         <Modal isOpen={this.state.showModal} toggle={this.close} size="lg"
           autoFocus={false}>
           <ModalHeader toggle={this.close} >
@@ -94,7 +94,7 @@ class EmployeeUpdateDialogue extends Component {
                     Firstname
                      </Label>
                   <Col md={10}>
-                    <Input type="email" name="firstName" id="formFirstName" value={this.state.firstName} onChange={this.onChange} />
+                    <Input type="text" name="firstName" id="formFirstName" value={this.state.firstName} onChange={this.onChange} />
                   </Col>
                 </FormGroup>
 
@@ -103,7 +103,7 @@ class EmployeeUpdateDialogue extends Component {
                     Lastname
                      </Label>
                   <Col md={10}>
-                    <Input type="email" name="lastName" id="formLastName" value={this.state.lastName} onChange={this.onChange} />
+                    <Input type="text" name="lastName" id="formLastName" value={this.state.lastName} onChange={this.onChange} />
                   </Col>
                 </FormGroup>
 
