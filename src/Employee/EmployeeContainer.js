@@ -64,11 +64,7 @@ class EmployeeContainer extends Component {
   }
 
   update = (employee) => {
-    employeeService.update(employee)
-    .then(employee => {
-        this.setState({ emps: _.concat(this.state.emps, employee) })
-      })
-    .catch(error => console.error(error));
+    this.setState({ emps: _.map(this.state.emps, e => e.id === employee.id ? employee : e) })
   }
 
   _delete = id => {

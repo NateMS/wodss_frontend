@@ -3,18 +3,31 @@ import { Container, Row, Button, Modal, ModalBody, ModalHeader, Form, FormGroup,
 import _ from 'lodash'
 import ContractCollapse from '../Contract/ContractCollapse'
 import ContractCreateDialogue from '../Contract/ContractCreateDialogue';
+import { employeeService } from '../API/EmployeeAPI'
 
 class EmployeeUpdateDialogue extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
+      active: false,
+      firstName: '',
+      lastName: 'this.state.lastName',
+      emailAddress: '',
       showModal: false,
-      collapse: false
     }
 
     this.getContracts = this.getContracts.bind(this)
     this.getAllocations = this.getAllocations.bind(this)
+  }
+
+  componentDidMount() {
+    this.setState({
+      active: this.props.employee.active,
+      firstName: this.props.employee.firstName,
+      lastName: this.props.employee.lastName,
+      emailAddress: this.props.employee.emailAddress
+    })
   }
 
   getContracts = (employeeId) => {
@@ -23,10 +36,6 @@ class EmployeeUpdateDialogue extends Component {
 
   getAllocations = (contractId) => {
     return _.filter(this.props.allocations, function (a) { return a.contractId === contractId })
-  }
-
-  toggle = () => {
-    this.setState({ collapse: !this.state.collapse });
   }
 
   open = () => {
@@ -38,11 +47,29 @@ class EmployeeUpdateDialogue extends Component {
   }
 
   onChange = event => {
+    console.log(this.state.active)
     this.setState({ [event.target.name]: event.target.value })
+  }
+
+  onCheckboxChange = event =>{
+    this.setState({active: !this.state.active});
   }
 
   onSubmit = event => {
     event.preventDefault()
+
+    let employee = {
+      active: this.state.active,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      emailAddress: this.state.emailAddress,
+      id: this.props.employee.id
+    }
+    let self = this
+    employeeService.update(employee)
+      .then(employee => self.props.update(employee))
+    
+      this.close()
   }
 
   create = (contract) => {
@@ -63,11 +90,38 @@ class EmployeeUpdateDialogue extends Component {
             <Form>
               <Container>
                 <FormGroup row>
+                  <Label md={2} for="formFirstName">
+                    Firstname
+                     </Label>
+                  <Col md={10}>
+                    <Input type="email" name="firstName" id="formFirstName" value={this.state.firstName} onChange={this.onChange} />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
+                  <Label md={2} for="formLastName">
+                    Lastname
+                     </Label>
+                  <Col md={10}>
+                    <Input type="email" name="lastName" id="formLastName" value={this.state.lastName} onChange={this.onChange} />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
                   <Label md={2} for="formTitle">
                     E-Mail
                      </Label>
                   <Col md={10}>
-                    <Input type="email" name="email" id="formEmail" value={this.props.employee.emailAddress} onChange={this.onChange} placeholder="name@domain.com" />
+                    <Input type="email" name="emailAddress" id="formEmail" value={this.state.emailAddress} onChange={this.onChange} />
+                  </Col>
+                </FormGroup>
+
+                <FormGroup row>
+                  <Label md={2} for="formActive">
+                    Active
+                        </Label>
+                  <Col md={10}>
+                    <Input type="checkbox" name="active" id="formActive" onChange={this.onCheckboxChange} defaultChecked={this.state.active}/>
                   </Col>
                 </FormGroup>
 
