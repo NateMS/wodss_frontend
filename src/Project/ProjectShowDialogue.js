@@ -38,7 +38,7 @@ class ProjectShowDialog extends Component {
                   </Col>
                   <Col md={12}>
                     <p>
-                      Projectmanager: {this.props.project.projectManagerId}
+                      Projectmanager: {this.props.project.pm.firstName + " " + this.props.project.pm.lastName}
                     </p>
                   </Col>
                   <Col md={12}>
