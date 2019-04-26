@@ -35,7 +35,7 @@ class ContractCollapse extends Component {
 
     render() {
         return <div key={this.props.contract.id}>
-        <Button name="colllapseBtn" color="primary" onClick={this.toggle}>{ dateToReadable(this.props.contract.startDate) } - {dateToReadable(this.props.contract.endDate)} Pensum: {this.props.contract.pensumPercentage}%</Button>
+        <Button name="colllapseBtn" color="secondary" onClick={this.toggle}>{ dateToReadable(this.props.contract.startDate) } - {dateToReadable(this.props.contract.endDate)} Pensum: {this.props.contract.pensumPercentage}%</Button>
         <Collapse isOpen={this.state.collapse} >
                     <Card>
                         <CardBody>

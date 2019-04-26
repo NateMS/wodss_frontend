@@ -46,7 +46,7 @@ class AllocationCreateRow extends Component {
                 />
             </td>
             <td>
-                <Button className="float-right" color="secondary" onClick={this.onSubmit}>Save</Button>
+                <Button className="float-right" color="success" onClick={this.onSubmit}>Save</Button>
             </td>
         </tr>
     }

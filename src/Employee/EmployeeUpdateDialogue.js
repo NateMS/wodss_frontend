@@ -85,7 +85,7 @@ class EmployeeUpdateDialogue extends Component {
 
                    <FormGroup>
                      <Col className="clearfix" style={{ padding: '.2rem' }}>
-                       <Button className="float-right" color="secondary" onClick={this.onSubmit}>Save</Button>
+                       <Button className="float-right" color="success" onClick={this.onSubmit}>Save</Button>
                      </Col>
                    </FormGroup>
                  </Form>

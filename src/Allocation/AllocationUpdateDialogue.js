@@ -59,7 +59,7 @@ class AllocationUpdateDialogue extends Component {
     render() {
         return (
           <div>
-            <Button color="success" onClick={this.open} className='float-right' >Edit Allocation</Button>
+            <Button color="primary" onClick={this.open} className='float-right' >Edit Allocation</Button>
             <Modal isOpen={this.state.showModal} toggle={this.close} size="lg" 
                         autoFocus={false}>
               <ModalHeader toggle={this.close} >
@@ -102,7 +102,7 @@ class AllocationUpdateDialogue extends Component {
 
                    <FormGroup>
                      <Col className="clearfix" style={{ padding: '.2rem' }}>
-                       <Button className="float-right" color="secondary" onClick={this.onSubmit}>Save</Button>
+                       <Button className="float-right" color="success" onClick={this.onSubmit}>Save</Button>
                      </Col>
                    </FormGroup>
                  </Form>
