@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Button, Collapse, Card, CardBody } from 'reactstrap'
-import {allocationService} from '../API/AllocationAPI'
+import { allocationService } from '../API/AllocationAPI'
 import AllocationTable from '../Allocation/AllocationTable';
 import { dateToReadable } from '../Helpers/DateHelper'
+import { Col } from 'reactstrap';
+import './ContractCollapse.css';
 import _ from 'lodash'
 
 class ContractCollapse extends Component {
@@ -17,7 +19,7 @@ class ContractCollapse extends Component {
         allocationService.getAll({ employeeId: this.props.contract.employeeId })
             .then(allocations => {
                 allocations = allocations.filter(a => a.contractId === contract.id)
-                this.setState({allocations: allocations})
+                this.setState({ allocations: allocations })
             })
     }
 
@@ -34,16 +36,19 @@ class ContractCollapse extends Component {
     }
 
     render() {
-        return <div key={this.props.contract.id}>
-        <Button name="colllapseBtn" color="secondary" onClick={this.toggle}>{ dateToReadable(this.props.contract.startDate) } - {dateToReadable(this.props.contract.endDate)} Pensum: {this.props.contract.pensumPercentage}%</Button>
-        <Collapse isOpen={this.state.collapse} >
+        return <div key={this.props.contract.id} class="row contract-collapse">
+            <Col md={12}>
+                <Button name="colllapseBtn" color="secondary" onClick={this.toggle}>{dateToReadable(this.props.contract.startDate)} - {dateToReadable(this.props.contract.endDate)} Pensum: {this.props.contract.pensumPercentage}%</Button>
+                <Collapse isOpen={this.state.collapse} >
                     <Card>
                         <CardBody>
-                            <AllocationTable allocations={this.state.allocations} employeeId={this.props.contract.employeeId} contractId={this.props.contract.contractId} update={this.update}/>
+                            <AllocationTable allocations={this.state.allocations} employeeId={this.props.contract.employeeId} contractId={this.props.contract.contractId} update={this.update} />
                         </CardBody>
                     </Card>
                 </Collapse>
-    </div>
+            </Col>
+
+        </div>
     }
 }
 

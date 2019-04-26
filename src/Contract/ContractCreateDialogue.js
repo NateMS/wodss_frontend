@@ -65,7 +65,7 @@ class ContractCreateDialogue extends Component {
             <Modal isOpen={this.state.showModal} toggle={this.close} size="lg" 
                         autoFocus={false}>
               <ModalHeader toggle={this.close} >
-                {/* Edit {this.props.employee.firstName} {this.props.employee.lastName} */}
+                Create Contract for { this.props.employee.firstName + " " + this.props.employee.lastName }
               </ModalHeader>
               <ModalBody>
                  <Form>
