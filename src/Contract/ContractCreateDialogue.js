@@ -48,8 +48,6 @@ class ContractCreateDialogue extends Component {
             employeeId: this.props.employee.id
         })
 
-        console.log(contract)
-
         let self = this
 
         contractService.create(contract)

@@ -15,7 +15,7 @@ class AllocationTableElement extends Component {
                 <td>{dateToReadable(this.props.allocation.endDate)}</td>
                 <td>{this.props.allocation.pensumPercentage}</td>
                 <td>
-                    <AllocationUpdateDialogue />
+                    <AllocationUpdateDialogue allocation={this.props.allocation} update={this.props.update}/>
                 </td>
             </tr>
     }

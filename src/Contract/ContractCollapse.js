@@ -29,13 +29,17 @@ class ContractCollapse extends Component {
         this.setState(state => ({ collapse: !state.collapse }));
     }
 
+    update = (allocation) => {
+        this.setState({ allocations: _.map(this.state.allocations, a => a.id === allocation.id ? allocation : a) })
+    }
+
     render() {
         return <div key={this.props.contract.id}>
         <Button name="colllapseBtn" color="primary" onClick={this.toggle}>{ dateToReadable(this.props.contract.startDate) } - {dateToReadable(this.props.contract.endDate)} Pensum: {this.props.contract.pensumPercentage}%</Button>
         <Collapse isOpen={this.state.collapse} >
                     <Card>
                         <CardBody>
-                            <AllocationTable allocations={this.state.allocations} employeeId={this.props.contract.employeeId} contractId={this.props.contract.contractId}/>
+                            <AllocationTable allocations={this.state.allocations} employeeId={this.props.contract.employeeId} contractId={this.props.contract.contractId} update={this.update}/>
                         </CardBody>
                     </Card>
                 </Collapse>

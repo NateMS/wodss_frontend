@@ -38,11 +38,9 @@ class ProjectCreateDialog extends Component {
       'projectManagerId': this.state.projectManagerId
     })
 
-    console.log(project);
 
     projectService.create(project)
       .then(project => {
-        console.log(project)
         // this.props.create(project)
         this.setState({ showModal: false })
         this.clear();

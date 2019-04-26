@@ -2,7 +2,7 @@ import React from 'react'
 import { Table } from 'reactstrap'
 import AllocationTableElement from './AllocationTableElement'
 
-const AllocationTable = ({ allocations, employeeId, contractId }) => <section>
+const AllocationTable = ({ allocations, employeeId, contractId, update }) => <section>
     <Table>
         <thead>
             <tr>
@@ -19,6 +19,7 @@ const AllocationTable = ({ allocations, employeeId, contractId }) => <section>
                             allocation={allocation}
                             employeeId={employeeId}
                             contractId={contractId}
+                            update={update}
                             />
                             
             })

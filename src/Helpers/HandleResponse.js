@@ -1,13 +1,12 @@
 // import { authenticationService } from './../Services/Authentication.service';
 
 export function handleResponse(response) {
-    console.log(response.body)
+    console.log(response)
     if(response.ok){
         return response.json()
     } else {
 
         const error = response.text;
-        console.log(error)
         return Promise.reject(error);
     }
     

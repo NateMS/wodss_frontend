@@ -22,8 +22,6 @@ function getAll(query) {
         if (query.hasOwnProperty('toDate')) url += `&toDate=${query['toDate']}`
     }
 
-    console.log(url)
-
     const requestOptions = { method: 'GET', headers: authHeader() };
     return fetch(url, requestOptions)
             .then(handleResponse)
@@ -64,11 +62,14 @@ function create(allocation) {
 
 function update(allocation) {
     const requestOptions = { 
-        method: 'POST', 
+        method: 'PUT', 
         headers: authHeader(), 
         body: JSON.stringify(allocation)
     };
 
+    console.log(allocation)
+    console.log(`${allocationURL}/${allocation.id}`)
+    
     return fetch(`${allocationURL}/${allocation.id}`, requestOptions)
             .then(handleResponse)
             .then(allocation => {

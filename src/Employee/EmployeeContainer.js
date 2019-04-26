@@ -56,7 +56,6 @@ class EmployeeContainer extends Component {
   }
 
   create = (employee, role, password) => {
-    console.log(employee)
     employeeService.create(employee, role, password)
     .then(employee => {
         this.setState({ emps: _.concat(this.state.emps, employee) })

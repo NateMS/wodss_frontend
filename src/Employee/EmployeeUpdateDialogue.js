@@ -8,12 +8,10 @@ class EmployeeUpdateDialogue extends Component {
 
     constructor(props) {
         super(props)
-        console.log(props)
         this.state = {
             showModal: false,
             collapse: false
         }
-        console.log(this.props.contracts)
 
         this.getContracts = this.getContracts.bind(this)
         this.getAllocations = this.getAllocations.bind(this)

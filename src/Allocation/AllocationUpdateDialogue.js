@@ -8,15 +8,19 @@ class AllocationUpdateDialogue extends Component {
     constructor(props) {
         super(props) // contractid
         this.state = {
-            startDate: new Date(),
-            endDate: new Date(),
-            pensumPercentage: '',
+            startDate: this.props.allocation.startDate,
+            endDate: this.props.allocation.endDate,
+            pensumPercentage: this.props.allocation.pensumPercentage,
             showModal: false
         }
     }
 
     open = () =>  {
       this.setState({ showModal: true })
+    }
+
+    close = () => {
+      this.clear()
     }
 
     onChange = event => {
@@ -27,10 +31,29 @@ class AllocationUpdateDialogue extends Component {
         event.preventDefault()
 
         let allocation = {
-
+          startDate: dateToTimestamp(this.state.startDate),
+          endDate: dateToTimestamp(this.state.endDate),
+          pensumPercentage: parseInt(this.state.pensumPercentage),
+          contractId: this.props.allocation.contractId,
+          projectId: this.props.allocation.projectId,
+          id: this.props.allocation.id
         }
+        
+        allocationService.update(allocation)
+          .then(allocation => {
+            console.log(allocation)
+            this.props.update(allocation)})
 
+        this.clear()
+    }
 
+    clear = () => {
+      this.setState({ 
+        startDate: this.props.allocation.startDate,
+        endDate: this.props.allocation.endDate,
+        pensumPercentage: this.props.allocation.pensumPercentage,
+        showModal: false
+      })
     }
 
     render() {
@@ -40,6 +63,7 @@ class AllocationUpdateDialogue extends Component {
             <Modal isOpen={this.state.showModal} toggle={this.close} size="lg" 
                         autoFocus={false}>
               <ModalHeader toggle={this.close} >
+                Edit Allocation
               </ModalHeader>
               <ModalBody>
                  <Form>

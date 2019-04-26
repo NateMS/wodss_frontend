@@ -18,7 +18,6 @@ class ProjectShowDialog extends Component {
     }
 
     render() {
-      console.log(this.props.project)
         return (
           <span>
             <Button color="secondary" onClick={this.open} className='float-left'>Show</Button>
