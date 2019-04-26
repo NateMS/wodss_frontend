@@ -25,6 +25,11 @@ class Header extends Component {
     authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
   }
 
+  logout(e) {
+    e.preventDefault();
+    authenticationService.logout();
+  }
+
   render() {
     let employeeLink = '';
     if (authenticationService.isPM) {
@@ -35,7 +40,7 @@ class Header extends Component {
     }
     return (
       <div>
-        <Navbar dark color="dark" expand="md" fixed>
+        <Navbar dark color="dark" expand="md">
           <NavbarBrand href="/">projectarr</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse isOpen={!this.state.collapsed} navbar>
@@ -47,7 +52,7 @@ class Header extends Component {
             </Nav>
             <Nav navbar>
               <NavItem>
-                <NavLink href="/logout/">{this.state.name} (logout)</NavLink>
+                <NavLink href="/logout" onClick={this.logout}>{this.state.name} (logout)</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

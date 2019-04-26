@@ -14,10 +14,9 @@ const Main = () => (
             <Col md="12">
                 <Switch>
                     <Route path="/login" component={LoginPage}/>
-                    <PrivateRoute exact path='/' component={ProjectContainer}/>
                     <PrivateRoute path='/projects' component={ProjectContainer}/>
                     <PrivateRoute path='/employees' component={EmployeeContainer}/>
-                    
+                    <PrivateRoute path='/' component={ProjectContainer}/>
                 </Switch>
             </Col>
         </Row>
