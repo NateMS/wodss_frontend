@@ -46,7 +46,7 @@ function create(contract) {
         headers: authHeader(), 
         body: JSON.stringify(contract)
     };
-
+    
     return fetch(`${contractURL}`, requestOptions)
             .then(handleResponse)
             .then(contract => {

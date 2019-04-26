@@ -12,12 +12,17 @@ export const allocationService = {
     remove
 };
 
-function getAll(employeeId, projectId, fromDate, toDate) {
+function getAll(query) {
     let url = allocationURL + '?'
-    if (employeeId) url += `&employeeId=${employeeId}`
-    if (projectId) url += `&projectId=${projectId}`
-    if (fromDate) url += `&fromDate=${fromDate}`
-    if (toDate) url += `&toDate=${toDate}`
+
+    if (query){
+        if (query.hasOwnProperty('employeeId')) url += `&employeeId=${query['employeeId']}`
+        if (query.hasOwnProperty('projectId')) url += `&projectId=${query['projectId']}`
+        if (query.hasOwnProperty('fromDate')) url += `&fromDate=${query['fromDate']}`
+        if (query.hasOwnProperty('toDate')) url += `&toDate=${query['toDate']}`
+    }
+
+    console.log(url)
 
     const requestOptions = { method: 'GET', headers: authHeader() };
     return fetch(url, requestOptions)

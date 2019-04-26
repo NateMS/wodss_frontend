@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Col, Input } from 'reactstrap'
 import { projectService } from '../API/ProjectAPI'
+import { dateToReadable, dateToTimestamp } from '../Helpers/DateHelper'
 
 class ProjectCreateDialog extends Component {
 
@@ -32,8 +33,8 @@ class ProjectCreateDialog extends Component {
     let project = ({
       'name': this.state.name,
       'ftePercentage': this.state.ftePercentage,
-      'startDate': this.state.startDate,
-      'endDate': this.state.endDate,
+      'startDate': dateToTimestamp(this.state.startDate),
+      'endDate': dateToTimestamp(this.state.endDate),
       'projectManagerId': this.state.projectManagerId
     })
 

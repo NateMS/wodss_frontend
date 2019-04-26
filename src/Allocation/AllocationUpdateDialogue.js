@@ -1,37 +1,22 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Col, Input } from 'reactstrap'
-import _ from 'lodash'
 import DatePicker from 'react-date-picker'
-import {contractService} from '../API/ContractAPI'
 import { dateToTimestamp } from '../Helpers/DateHelper'
+import {allocationService} from '../API/AllocationAPI'
+import { Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Col, Input } from 'reactstrap'
 
-class ContractCreateDialogue extends Component {
-
+class AllocationUpdateDialogue extends Component {
     constructor(props) {
-        super(props)
+        super(props) // contractid
         this.state = {
             startDate: new Date(),
             endDate: new Date(),
-            pensum: '',
+            pensumPercentage: '',
             showModal: false
         }
     }
-    
+
     open = () =>  {
-        this.setState({ showModal: true })
-    }
-
-    close = () => {
-      this.clear()
-    }
-
-    clear = () => {
-      this.setState({ 
-        startDate: new Date(),
-        endDate: new Date(),
-        pensum: '',
-        showModal: false
-     })
+      this.setState({ showModal: true })
     }
 
     onChange = event => {
@@ -41,33 +26,20 @@ class ContractCreateDialogue extends Component {
     onSubmit = event => {
         event.preventDefault()
 
-        let contract = ({
-            startDate: dateToTimestamp(this.state.startDate),
-            endDate: dateToTimestamp(this.state.endDate),
-            pensumPercentage: this.state.pensum,
-            employeeId: this.props.employee.id
-        })
+        let allocation = {
 
-        console.log(contract)
+        }
 
-        let self = this
 
-        contractService.create(contract)
-          .then(contract => {
-            self.props.create(contract)
-          })
-          .catch(error => console.error(error));
-        this.clear()
     }
 
     render() {
         return (
           <div>
-            <Button color="success" onClick={this.open} className='float-right' >Create Contract</Button>
+            <Button color="success" onClick={this.open} className='float-right' >Edit Allocation</Button>
             <Modal isOpen={this.state.showModal} toggle={this.close} size="lg" 
                         autoFocus={false}>
               <ModalHeader toggle={this.close} >
-                {/* Edit {this.props.employee.firstName} {this.props.employee.lastName} */}
               </ModalHeader>
               <ModalBody>
                  <Form>
@@ -96,9 +68,9 @@ class ContractCreateDialogue extends Component {
                      <Col md={10}>
                      <Input
                           type="number"
-                          name="pensum"
+                          name="pensumPercentage"
                           id="pensum"
-                          value={this.state.pensum}
+                          value={this.state.pensumPercentage}
                           onChange={this.onChange}
                         />
                       </Col>
@@ -115,7 +87,7 @@ class ContractCreateDialogue extends Component {
           </div>
         )
       }    
+    
 }
 
-
-export default ContractCreateDialogue
+export default AllocationUpdateDialogue;

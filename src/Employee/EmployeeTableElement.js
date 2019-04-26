@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import _ from 'lodash'
 import { Button } from 'reactstrap'
 import EmployeeUpdateDialogue from './EmployeeUpdateDialogue'
-import { PrivateRoute } from './../Components/PrivateRoute'
 import {authenticationService} from '../Services/Authentication.service'
 
 class EmployeeTableElement extends Component {
@@ -19,7 +18,7 @@ class EmployeeTableElement extends Component {
             viewDialogue = <EmployeeUpdateDialogue update={ this.props.update } employee={ this.props.employee } fte={this.props.fte} contracts = {this.props.contracts} allocations = { this.props.allocations } />        
             deleteButton = <Button color='danger' onClick={ _.partial(this.props._delete, this.props.employee.id) } className='float-right' >Delete</Button>
         } else {
-            // viewDialogue = <EmployeeShowDialogue ... />
+            //TODO viewDialogue = <EmployeeShowDialogue ... />
         }
         
     return  <tr key={ this.props.employee.id } >

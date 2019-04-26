@@ -3,12 +3,13 @@ import _ from 'lodash'
 import { Button } from 'reactstrap'
 import ProjectShowDialogue from './ProjectShowDialogue'
 import ProjectUpdateDialogue from './ProjectUpdateDialogue'
+import { dateToReadable, dateToTimestamp } from '../Helpers/DateHelper'
 
 const ProjectTableElement = ({ update, _delete, project }) => (
     <tr key={ project.id } >
         <td>{ project.name }</td>
-        <td>{ project.startDate }</td>
-        <td>{ project.endDate }</td>
+        <td>{ dateToReadable(project.startDate) }</td>
+        <td>{ dateToReadable(project.endDate) }</td>
         <td>{ project.projectManagerId }</td>
         <td>{ project.ftePercentage }</td>
         <td><ProjectShowDialogue project={ project } />

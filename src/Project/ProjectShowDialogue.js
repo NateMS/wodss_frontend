@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalBody, ModalHeader, Col, Row } from 'reactstrap'
+import { dateToReadable, dateToTimestamp } from '../Helpers/DateHelper'
 
 class ProjectShowDialog extends Component {
 
@@ -33,7 +34,7 @@ class ProjectShowDialog extends Component {
                     </Col>
                   <Col md={12}>
                     <p>
-                      From {this.props.project.startDate} to {this.props.project.endDate}
+                      From {dateToReadable(this.props.project.startDate)} to {dateToReadable(this.props.project.endDate)}
                     </p>
                   </Col>
                   <Col md={12}>
