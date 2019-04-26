@@ -11,18 +11,18 @@ class ProjectContainer extends Component {
   constructor(props) {
     super(props)
     this.state = { ps: [], pms: [] }
-    employeeService.getAll('PROJECTMANAGER').then(prmngs => this.setState({ pms: prmngs.filter(pm => pm.active) }));
+    employeeService.getAll('PROJECTMANAGER').then(prmngs =>  this.setState({ pms: prmngs })); // this.setState({ pms: prmngs.filter(pm => pm.active)
   }
 
   generateIndex = projects =>
     _.get(_.last(projects), 'id', 0) + 1
 
   create = (project) => {
-    this.setState({ ps: _.concat(this.state.ps, project) })
+    this.setState({ ps: _.concat(this.state.ps, this.addPmToProject(project)) })
   }
 
   update = (project) => {
-    this.setState({ ps: _.map(this.state.ps, p => p.id === project.id ? project : p) })
+    this.setState({ ps: _.map(this.state.ps, p => p.id === project.id ? this.addPmToProject(project) : p) })
   }
 
   _delete = id => {
@@ -33,15 +33,17 @@ class ProjectContainer extends Component {
   componentDidMount() {
     projectService.getAll()
       .then(projects => {
-        employeeService.getAll('PROJECTMANAGER').then(prmngs => {
           projects = projects.map(project => {
-            project.pm = prmngs.find(pm => pm.id === project.projectManagerId);
-            return project;
+            return this.addPmToProject(project)
           })
-          console.log(projects)
           this.setState({ ps: projects })
         })
-      })
+  }
+
+  addPmToProject = (project) => {
+    console.log(project)
+    project.pm = this.state.pms.find(pm => pm.id === project.projectManagerId);
+    return project;
   }
 
   render() {

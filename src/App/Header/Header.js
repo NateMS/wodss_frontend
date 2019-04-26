@@ -21,6 +21,10 @@ class Header extends Component {
     });
   }
 
+  componentDidMount() {
+    authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
+  }
+
   render() {
     let employeeLink = '';
     if (authenticationService.isPM) {

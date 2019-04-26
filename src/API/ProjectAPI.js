@@ -48,8 +48,11 @@ function create(project) {
         body: JSON.stringify(project)
     };
 
+    console.log(JSON.stringify(project))
+
     return fetch(`${projectURL}`, requestOptions)
             .then(handleResponse)
+            .catch(error => console.error(error));
 }
 
 function update(project) {

@@ -2,53 +2,56 @@ import React, { Component } from 'react'
 import { Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Col, Input } from 'reactstrap'
 import { projectService } from '../API/ProjectAPI'
 import { dateToReadable, dateToTimestamp } from '../Helpers/DateHelper'
+import DatePicker from 'react-date-picker'
 
 class ProjectCreateDialog extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { name: '', projectManagerId: '', ftePercentage: '', startDate: '', endDate: '', showModal: false }
+    this.state = { name: '', projectManagerId: '', ftePercentage: '', startDate: new Date(), endDate: new Date(), showModal: false }
   }
 
   open = () => {
-    this.setState({ showModal: true })
+    this.setState({ projectManagerId: this.props.pms[0].id, showModal: true })
   }
 
   close = () => {
-    this.setState({ showModal: false })
     this.clear()
+    this.setState({ showModal: false })
   }
 
   clear = () => {
-    this.setState({ name: '', projectManagerId: '', ftePercentage: '', startDate: '', endDate: '' })
+    this.state = { name: '', projectManagerId: '', ftePercentage: '', startDate: new Date(), endDate: new Date() }
   }
 
   onChange = event => {
-    // [event.target.name]: Computed property names, siehe https://mzl.la/1GIMi82
     this.setState({ [event.target.name]: event.target.value })
   }
 
   onSubmit = event => {
     event.preventDefault()
-    let project = ({
-      'name': this.state.name,
-      'ftePercentage': this.state.ftePercentage,
-      'startDate': dateToTimestamp(this.state.startDate),
-      'endDate': dateToTimestamp(this.state.endDate),
-      'projectManagerId': this.state.projectManagerId
-    })
+    let project = {
+      name: this.state.name,
+      ftePercentage: this.state.ftePercentage,
+      startDate: dateToTimestamp(this.state.startDate),
+      endDate: dateToTimestamp(this.state.endDate),
+      projectManagerId: this.state.projectManagerId
+    }
 
+    console.log(project)
 
+    let self = this
     projectService.create(project)
       .then(project => {
-        // this.props.create(project)
-        this.setState({ showModal: false })
-        this.clear();
+        console.log(project)
+        self.props.create(project)
+        self.setState({ showModal: false })
+        self.clear();
       })
-      .catch(error => console.log('' + error))
   }
 
   render() {
+    
     return (
       <div>
         <Button color="success" onClick={this.open} className='float-right'>Add Project</Button>
@@ -82,7 +85,7 @@ class ProjectCreateDialog extends Component {
                   Start Date
                      </Label>
                 <Col md={9}>
-                  <Input type="text" name="startDate" value={this.state.startDate} id="formStartDate" onChange={this.onChange} />
+                  <DatePicker name="startDate" value={this.state.startDate} onChange={e => this.onChange({target: {name: 'startDate', value:e}})}/>
                 </Col>
               </FormGroup>
 
@@ -91,7 +94,7 @@ class ProjectCreateDialog extends Component {
                   End Date
                      </Label>
                 <Col md={9}>
-                  <Input type="text" name="endDate" value={this.state.endDate} id="formEndDate" onChange={this.onChange} />
+                <DatePicker name="endDate" value={this.state.endDate} onChange={e => this.onChange({target: {name: 'endDate', value:e}})}/>
                 </Col>
               </FormGroup>
 
@@ -101,7 +104,8 @@ class ProjectCreateDialog extends Component {
                      </Label>
                 <Col md={9}>
                   <select name="projectManagerId" id="formPM" value={this.state.projectManagerId} onChange={this.onChange} >
-                    {this.props.pms.map(pm =>
+                    { 
+                      this.props.pms.map(pm =>
                       <option key={pm.id} value={pm.id}>{pm.firstName} {pm.lastName}</option>
                     )}
                   </select>

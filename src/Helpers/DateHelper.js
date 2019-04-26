@@ -4,6 +4,7 @@ export function dateToReadable(date) {
 }
 
 export function dateToTimestamp(date) {
+    let tzoffset = (new Date()).getTimezoneOffset() * 60000;
     let d = new Date(date)
-    return d.toISOString().split('T')[0]
+    return (new Date(d - tzoffset)).toISOString().split('T')[0];
 }

@@ -17,11 +17,12 @@ const ProjectTable = ({ update, _delete, ps }) => <section>
         <tbody>
         { 
             ps.map(project => 
-                <ProjectTableElement key={ project.id } 
+                {
+                return <ProjectTableElement key={ project.id } 
                                            update={ update }
                                            _delete={ _delete }
-                                           project={ project } />) 
-        }
+                                           project={ project } /> 
+        })}
         </tbody>
     </Table>
 </section>

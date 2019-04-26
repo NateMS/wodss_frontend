@@ -24,9 +24,11 @@ logout() {
     history.push('/login');
 }
   render() {
+    let header
+    if(this.state.currentUser) header = <Header />
     return (
       <div className="App">
-        <Header />
+        { header }
         <Main />
         <Footer />
       </div>

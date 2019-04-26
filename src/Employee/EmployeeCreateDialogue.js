@@ -141,15 +141,6 @@ class EmployeeCreateDialogue extends Component {
                       </ButtonGroup>
                     </Col>
                    </FormGroup>
-                   
-                    {/* <FormGroup row>
-                        <Label md={2} for="formActive">
-                        Active
-                        </Label>
-                        <Col md={10}>
-                        <Input type="checkbox" name="active" id="formActive" onChange={ this.onCheckboxChange } />
-                        </Col>
-                    </FormGroup> */}
                     
                    <FormGroup>
                      <Col className="clearfix" style={{ padding: '.2rem' }}>
