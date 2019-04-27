@@ -56,12 +56,8 @@ class EmployeeContainer extends Component {
     return _.filter(this.state.allocations, function(a) { return a.contractId == contractId})
   }
 
-  create = (employee, role, password) => {
-    employeeService.create(employee, role, password)
-    .then(employee => {
-        this.setState({ emps: _.concat(this.state.emps, employee) })
-      })
-    .catch(error => console.error(error));
+  create = (employee) => {
+    this.setState({ emps: _.concat(this.state.emps, employee) })
   }
 
   update = (employee) => {

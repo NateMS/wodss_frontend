@@ -36,7 +36,6 @@ function get(employeeId) {
         .then(employee => {
             return employee;
         })
-        .catch(error => console.error(error));
 }
 
 function create(employee, role, password) {
@@ -51,7 +50,6 @@ function create(employee, role, password) {
         .then(employee => {
             return employee;
         })
-        .catch(error => console.error(error));
 }
 
 function update(employee) {
@@ -66,7 +64,6 @@ function update(employee) {
         .then(employee => {
             return employee;
         })
-        .catch(error => console.error(error));
 }
 
 function remove(employeeId) {
@@ -77,5 +74,4 @@ function remove(employeeId) {
 
     return fetch(`${employeeURL}/${employeeId}`, requestOptions)
         .then(handleResponse)
-        .catch(error => console.error(error));
 }

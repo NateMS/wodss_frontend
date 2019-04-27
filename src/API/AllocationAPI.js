@@ -28,7 +28,6 @@ function getAll(query) {
             .then(allocations => {
                 return allocations;
             })
-            .catch(error => console.error(error));
 }
 
 function get(allocationID) {
@@ -42,7 +41,6 @@ function get(allocationID) {
             .then(allocation => {
                 return allocation
             })
-            .catch(error => console.error(error));
 }
 
 function create(allocation) {
@@ -57,7 +55,6 @@ function create(allocation) {
             .then(allocation => {
                 return allocation;
             })
-            .catch(error => console.error(error));
 }
 
 function update(allocation) {
@@ -75,7 +72,6 @@ function update(allocation) {
             .then(allocation => {
                 return allocation;
             })
-            .catch(error => console.error(error));
 }
 
 function remove(allocationID) {
@@ -86,5 +82,4 @@ function remove(allocationID) {
 
     return fetch(`${allocationURL}/${allocationID}`, requestOptions)
             .then(handleResponse)
-            .catch(error => console.error(error));
 }

@@ -23,7 +23,6 @@ function getAll(fromDate, toDate) {
             .then(contracts => {
                 return contracts;
             })
-            .catch(error => console.error(error));
 }
 
 function get(contractID) {
@@ -37,7 +36,6 @@ function get(contractID) {
             .then(contract => {
                 return contract
             })
-            .catch(error => console.error(error));
 }
 
 function create(contract) {
@@ -52,7 +50,6 @@ function create(contract) {
             .then(contract => {
                 return contract;
             })
-            .catch(error => console.error(error));
 }
 
 function update(contract) {
@@ -67,7 +64,6 @@ function update(contract) {
             .then(contract => {
                 return contract;
             })
-            .catch(error => console.error(error));
 }
 
 function remove(contractID) {
@@ -78,5 +74,4 @@ function remove(contractID) {
 
     return fetch(`${contractURL}/${contractID}`, requestOptions)
             .then(handleResponse)
-            .catch(error => console.error(error));
 }

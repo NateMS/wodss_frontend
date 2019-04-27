@@ -24,7 +24,6 @@ function getAll(projectManagerId, fromDate, toDate) {
             .then(projects => {
                 return projects;
             })
-            .catch(error => console.error(error));
 }
 
 function get(projectId) {
@@ -38,7 +37,6 @@ function get(projectId) {
             .then(project => {
                 return project;
             })
-            .catch(error => console.error(error));
 }
 
 function create(project) {
@@ -52,8 +50,7 @@ function create(project) {
 
     return fetch(`${projectURL}`, requestOptions)
             .then(handleResponse)
-            .catch(error => console.error(error));
-}
+    }
 
 function update(project) {
     const requestOptions = {
@@ -67,7 +64,6 @@ function update(project) {
             .then(project => {
                 return project;
             })
-            .catch(error => console.error(error));
 }
 
 function remove(projectId) {
@@ -78,5 +74,4 @@ function remove(projectId) {
 
     return fetch(`${projectURL}/${projectId}`, requestOptions)
             .then(handleResponse)
-            .catch(error => console.error(error));
 }
