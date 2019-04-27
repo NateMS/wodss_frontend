@@ -9,8 +9,9 @@ const EmployeeTable = ({ update, _delete, fte, emps, contracts, allocations, add
                 <th>Name</th>
                 <th>E-Mail</th>
                 <th>FTE</th>
+                <th>Role</th>
                 <th>Active</th>
-                <th>Actions</th>
+                <th style={{minWidth: '160px'}}>Actions</th>
             </tr>
         </thead>
         <tbody>

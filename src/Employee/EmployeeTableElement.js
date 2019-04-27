@@ -17,7 +17,7 @@ class EmployeeTableElement extends Component {
 
         if(authenticationService.isAdmin()){
             viewEditDialogue = <EmployeeUpdateDialogue add_contract = { this.props.add_contract } update={ this.props.update } employee={ this.props.employee } fte={this.props.fte} contracts = {this.props.contracts} allocations = { this.props.allocations } />        
-            deleteButton = <Button color='danger' onClick={ _.partial(this.props._delete, this.props.employee.id) } className='float-right btn-list-btn' >Delete</Button>
+            deleteButton = <Button color='danger' onClick={ _.partial(this.props._delete, this.props.employee.id) } className='float-left btn-list-btn' >Delete</Button>
         } else {
             viewEditDialogue = <EmployeeShowDialogue employee={ this.props.employee } fte={this.props.fte} contracts = {this.props.contracts} allocations = { this.props.allocations } />        
         }
@@ -26,10 +26,11 @@ class EmployeeTableElement extends Component {
                 <td>{ this.props.employee.firstName } { this.props.employee.lastName }</td>
                 <td>{ this.props.employee.emailAddress }</td>
                 <td>{ this.props.fte }</td>
-                <td>{ this.props.employee.active.toString() }</td>
+                <td>{ this.props.employee.role }</td>
+                <td>{ this.props.employee.active ? 'active' : 'inactive' }</td>
                 <td>
-                    { deleteButton }
                     { viewEditDialogue }
+                    { deleteButton }
                 </td>
             </tr>
 

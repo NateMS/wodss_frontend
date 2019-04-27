@@ -82,7 +82,7 @@ class EmployeeUpdateDialogue extends Component {
   render() {
     return (
       <div>
-        <Button color="primary" onClick={this.open} className='float-right btn-list-btn' >Edit</Button>
+        <Button color="primary" onClick={this.open} className='float-left btn-list-btn' >Edit</Button>
         <Modal isOpen={this.state.showModal} toggle={this.close} size="lg"
           autoFocus={false}>
           <ModalHeader toggle={this.close} >

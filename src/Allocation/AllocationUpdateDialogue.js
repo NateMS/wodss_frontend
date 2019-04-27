@@ -72,7 +72,7 @@ class AllocationUpdateDialogue extends Component {
                        Start Date
                      </Label>
                      <Col md={10}>
-                     <DatePicker name="startDate" value={this.state.startDate} onChange={e => this.onChange({target: {name: 'startDate', value:e}})}/>
+                     <DatePicker name="startDate" value={new Date(this.state.startDate)} onChange={e => this.onChange({target: {name: 'startDate', value:e}})}/>
                      </Col>
                    </FormGroup>
 
@@ -81,7 +81,7 @@ class AllocationUpdateDialogue extends Component {
                        End Date
                      </Label>
                      <Col md={10}>
-                     <DatePicker name="endDate" value={this.state.endDate} onChange={e => this.onChange({target: {name: 'endDate', value:e}})}/>
+                     <DatePicker name="endDate" value={new Date(this.state.endDate)} onChange={e => this.onChange({target: {name: 'endDate', value:e}})}/>
                         </Col>
                    </FormGroup>
 
@@ -89,7 +89,7 @@ class AllocationUpdateDialogue extends Component {
                      <Label md={2} for="pensum">
                       Pensum
                      </Label>
-                     <Col md={10}>
+                     <Col md={2}>
                      <Input
                           type="number"
                           name="pensumPercentage"

@@ -5,19 +5,18 @@ import {authenticationService} from '../Services/Authentication.service'
 
 class AllocationTable extends Component {
 
-    constructor(props) {
-        super(props)
-    }
-
     render() {
         
-        let actionHeader
-        if(authenticationService.isAdmin()) actionHeader = <th>Actions</th>
+        let actionHeader, nameColumn
+        if(this.props.editable && authenticationService.isPM()) actionHeader = <th>Actions</th>
+
+        if (this.props.nameColumn) nameColumn = <th>Actions</th>
 
         return <section>
             <Table>
                 <thead>
                     <tr>
+                        {nameColumn}
                         <th>Start</th>
                         <th>End</th>
                         <th>Pensum</th>
@@ -32,6 +31,8 @@ class AllocationTable extends Component {
                                 employeeId={this.props.employeeId}
                                 contractId={this.props.contractId}
                                 update={this.props.update}
+                                editable={this.props.editable}
+                                nameColumn={this.props.nameColumn}
                             />
 
                         })
