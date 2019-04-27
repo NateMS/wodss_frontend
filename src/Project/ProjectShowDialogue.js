@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalBody, ModalHeader, Col, Row } from 'reactstrap'
 import { dateToReadable, dateToTimestamp } from '../Helpers/DateHelper'
+import AllocationTable from '../Allocation/AllocationTable';
 
 class ProjectShowDialog extends Component {
 
@@ -43,8 +44,14 @@ class ProjectShowDialog extends Component {
                   </Col>
                   <Col md={12}>
                     <p>
-                      FTE: {this.props.project.ftePercentage}
+                      FTE: {this.props.project.usedFTE} / {this.props.project.ftePercentage}
                     </p>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={12}>
+                    <h4>Assigned Developers</h4>
+                    <AllocationTable allocations={this.props.project.allocations} nameColumn={true}/>
                   </Col>
                 </Row>
               </ModalBody>

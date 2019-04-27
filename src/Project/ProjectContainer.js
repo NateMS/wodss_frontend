@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { projectService } from '../API/ProjectAPI'
 import { employeeService } from '../API/EmployeeAPI'
+import { contractService } from '../API/ContractAPI'
+import { allocationService } from '../API/AllocationAPI'
 import ProjectTable from './ProjectTable'
 import ProjectCreateDialogue from './ProjectCreateDialogue'
 
@@ -10,8 +12,9 @@ class ProjectContainer extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { ps: [], pms: [] }
+    this.state = { ps: [], pms: [], allocations: []}
     employeeService.getAll('PROJECTMANAGER').then(prmngs =>  this.setState({ pms: prmngs }));
+    allocationService.getAll().then(allocations =>  this.setState({ allocations: allocations }));
   }
 
   generateIndex = projects =>
@@ -34,7 +37,7 @@ class ProjectContainer extends Component {
     projectService.getAll()
       .then(projects => {
           projects = projects.map(project => {
-            return this.addPmToProject(project)
+            return this.addPmToProject(this.addAllocationsToProject(project))
           })
           this.setState({ ps: projects })
         })
@@ -43,6 +46,31 @@ class ProjectContainer extends Component {
   addPmToProject = (project) => {
     project.pm = this.state.pms.find(pm => pm.id === project.projectManagerId);
     return project;
+  }
+
+  addAllocationsToProject = (project) => {
+    project.allocations = this.state.allocations.filter(allocation => allocation.projectId === project.id);
+    if (!project.allocations) project.allocations = [];
+    project.usedFTE = 0
+    project.allocations = project.allocations.map(allocation => {
+      this.addContractToAllocation(allocation)
+      project.usedFTE += allocation.pensumPercentage
+      return allocation
+    });
+    return project;
+  }
+
+  addContractToAllocation = async (allocation) => {
+    const contract = await contractService.get(allocation.contractId);
+    allocation.contract = contract;
+    allocation = this.addEmployeeToAllocation(allocation);
+    return allocation;
+  }
+
+  addEmployeeToAllocation = async (allocation) => {
+    const employee = await employeeService.get(allocation.contract.employeeId);
+    allocation.employee = employee;
+    return allocation;
   }
 
   render() {
