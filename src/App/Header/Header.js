@@ -11,7 +11,7 @@ class Header extends Component {
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
       collapsed: true,
-      name: authenticationService.currentUserValue.decoded.firstName + " " + authenticationService.currentUserValue.decoded.lastName
+      name: ''
     };
   }
 
@@ -22,7 +22,9 @@ class Header extends Component {
   }
 
   componentDidMount() {
+    console.log(authenticationService.currentUserValue)
     authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
+    this.setState({name: authenticationService.currentUserValue().decoded.firstName + " " + authenticationService.currentUserValue().decoded.lastName})
   }
 
   logout(e) {
@@ -32,7 +34,7 @@ class Header extends Component {
 
   render() {
     let employeeLink = '';
-    if (authenticationService.isPM) {
+    if (authenticationService.isPM()) {
       employeeLink =  
       <NavItem>
         <NavLink href="/employees/">Employees</NavLink>

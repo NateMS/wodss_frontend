@@ -12,7 +12,7 @@ class AllocationTable extends Component {
     render() {
         
         let actionHeader
-        if(authenticationService.isAdmin) actionHeader = <th>Actions</th>
+        if(authenticationService.isAdmin()) actionHeader = <th>Actions</th>
 
         return <section>
             <Table>

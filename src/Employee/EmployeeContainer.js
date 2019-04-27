@@ -23,15 +23,14 @@ class EmployeeContainer extends Component {
   }
 
   componentDidMount() {
-    employeeService.getAll().then(
-      employees => {
-        this.setState({emps: employees})
-      }
-    )
-
     contractService.getAll().then(
       contracts =>{
         this.setState({contracts: contracts})
+      }
+    )
+    employeeService.getAll().then(
+      employees => {
+        this.setState({emps: employees})
       }
     )
 
@@ -40,6 +39,8 @@ class EmployeeContainer extends Component {
         this.setState({allocations: allocations})
       }
     )
+
+
   }
 
   getFTE(employeeId){
@@ -79,7 +80,7 @@ class EmployeeContainer extends Component {
   render() {
     let createDialogue
 
-    if(authenticationService.isAdmin){
+    if(authenticationService.isAdmin()){
       createDialogue = <EmployeeCreateDialogue create = { this.create }/>
     }
 

@@ -12,7 +12,7 @@ class AllocationTableElement extends Component {
     render() {
         
     let editable
-    if (authenticationService.isAdmin) {
+    if (authenticationService.isAdmin()) {
         editable =                 <td>
         <AllocationUpdateDialogue allocation={this.props.allocation} update={this.props.update}/>
     </td>

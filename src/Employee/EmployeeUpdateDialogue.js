@@ -15,7 +15,7 @@ class EmployeeUpdateDialogue extends Component {
       lastName: 'this.state.lastName',
       emailAddress: '',
       showModal: false,
-      contracts: []
+      contracts: this.props.contracts
     }
 
     this.getAllocations = this.getAllocations.bind(this)
@@ -28,7 +28,7 @@ class EmployeeUpdateDialogue extends Component {
       firstName: this.props.employee.firstName,
       lastName: this.props.employee.lastName,
       emailAddress: this.props.employee.emailAddress,
-      contracts: _.filter(this.props.contracts, function (c) { return c.employeeId === employeeId })
+      contracts: _.filter(this.state.contracts, function (c) { return c.employeeId === employeeId })
     })
   }
 
@@ -131,11 +131,11 @@ class EmployeeUpdateDialogue extends Component {
                     <ContractCreateDialogue create={this.create} employee={this.props.employee} />
                   </Col>
                 </Row>
-
                 {
                   this.state.contracts.map(contract => {
                     return <ContractCollapse key={contract.id} contract={contract} />
                   })
+                  
                 }
               </Container>
 

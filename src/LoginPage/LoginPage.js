@@ -3,13 +3,14 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
 import { authenticationService } from '../Services/Authentication.service';
+import { resolve } from 'q';
 
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
 
         // redirect to home if already logged in
-        if (authenticationService.currentUserValue) { 
+        if (authenticationService.currentUserValue()) { 
             this.props.history.push('/');
         }
     }
@@ -36,6 +37,7 @@ class LoginPage extends React.Component {
                         authenticationService.login(email, password)
                             .then(
                                 user => {
+                                    console.log(user)
                                     const { from } = this.props.location.state || { from: { pathname: "/" } };
                                     this.props.history.push(from);
                                 },
