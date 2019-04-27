@@ -30,7 +30,7 @@ logout() {
       <div className="App">
         { header }
         <Main />
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }
