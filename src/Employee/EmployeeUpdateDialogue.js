@@ -28,8 +28,12 @@ class EmployeeUpdateDialogue extends Component {
       firstName: this.props.employee.firstName,
       lastName: this.props.employee.lastName,
       emailAddress: this.props.employee.emailAddress,
-      contracts: _.filter(this.state.contracts, function (c) { return c.employeeId === employeeId })
+      contracts: this.getContracts(employeeId)
     })
+  }
+
+  getContracts = (employeeId) => {
+    return _.filter(this.props.contracts, function (c) { return c.employeeId === employeeId; })
   }
 
   getAllocations = (contractId) => {
@@ -49,8 +53,8 @@ class EmployeeUpdateDialogue extends Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
-  onCheckboxChange = event =>{
-    this.setState({active: !this.state.active});
+  onCheckboxChange = event => {
+    this.setState({ active: !this.state.active });
   }
 
   onSubmit = event => {
@@ -66,12 +70,12 @@ class EmployeeUpdateDialogue extends Component {
     let self = this
     employeeService.update(employee)
       .then(employee => self.props.update(employee))
-    
-      this.close()
+
+    this.close()
   }
 
   create = (contract) => {
-    this.setState({contracts: [...this.state.contracts, contract]})
+    this.setState({ contracts: [...this.state.contracts, contract] })
     this.props.add_contract(contract)
   }
 
@@ -119,7 +123,7 @@ class EmployeeUpdateDialogue extends Component {
                     Active
                         </Label>
                   <Col md={10}>
-                    <Input type="checkbox" name="active" id="formActive" onChange={this.onCheckboxChange} defaultChecked={this.state.active}/>
+                    <Input type="checkbox" name="active" id="formActive" onChange={this.onCheckboxChange} defaultChecked={this.state.active} />
                   </Col>
                 </FormGroup>
 
@@ -132,10 +136,9 @@ class EmployeeUpdateDialogue extends Component {
                   </Col>
                 </Row>
                 {
-                  this.state.contracts.map(contract => {
-                    return <ContractCollapse key={contract.id} contract={contract} />
-                  })
-                  
+                  this.getContracts(this.props.employee.id).map(contract =>
+                    <ContractCollapse key={contract.id} contract={contract} />
+                  )
                 }
               </Container>
 
