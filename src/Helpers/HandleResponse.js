@@ -1,33 +1,33 @@
 // import { authenticationService } from './../Services/Authentication.service';
-import toastr from 'toastr'
+import { toast } from 'react-toastify';
 
 export function handleResponse(response) {
     console.log(response)
     if(response.ok){
         return response.json()
     } else {
-        const error = response.text();
-        console.log(error)
-        toastr.options = {
-            "closeButton": false,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-bottom-full-width",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-          }
+        const error = response.text()
+        error.then(e => {
+            console.log(e)
+            let message = e
+            try {
+                let json = JSON.parse(e)
+                if(json.hasOwnProperty('message')) message = json.message
+            } catch (e) {
+            }
 
+            
+            toast.error(message, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+            })
+        })
+        
 
-        toastr.error("Are you the six fingered man?", "Error")
         return Promise.reject(error);
     }
     

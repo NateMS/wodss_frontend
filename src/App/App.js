@@ -5,6 +5,8 @@ import { history } from '../Helpers/History';
 import Header from './Header/Header';
 import Main from './Main/Main';
 import Footer from './Footer/Footer';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 class App extends Component {
   constructor(props) {
@@ -28,6 +30,7 @@ logout() {
     if(this.state.currentUser) header = <Header />
     return (
       <div className="App">
+      <ToastContainer />
         { header }
         <Main />
         {/* <Footer /> */}

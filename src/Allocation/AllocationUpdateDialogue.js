@@ -42,9 +42,9 @@ class AllocationUpdateDialogue extends Component {
         allocationService.update(allocation)
           .then(allocation => {
             console.log(allocation)
-            this.props.update(allocation)})
-
-        this.clear()
+            this.props.update(allocation)
+            this.clear()
+          })
     }
 
     clear = () => {

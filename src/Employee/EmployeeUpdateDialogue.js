@@ -45,7 +45,11 @@ class EmployeeUpdateDialogue extends Component {
   }
 
   close = () => {
-    this.setState({ title: '', description: '', showModal: false })
+    this.setState({ active: this.props.employee.active,
+      firstName: this.props.employee.firstName,
+      lastName: this.props.employee.lastName,
+      emailAddress: this.props.employee.emailAddress,
+       showModal: false })
   }
 
   onChange = event => {
@@ -69,9 +73,10 @@ class EmployeeUpdateDialogue extends Component {
     }
     let self = this
     employeeService.update(employee)
-      .then(employee => self.props.update(employee))
+      .then(employee => {self.props.update(employee)
+        this.close()
+      })
 
-    this.close()
   }
 
   create = (contract) => {

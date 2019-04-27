@@ -53,9 +53,8 @@ class ContractCreateDialogue extends Component {
         contractService.create(contract)
           .then(contract => {
             self.props.create(contract)
+            this.clear()
           })
-          .catch(error => console.error(error));
-        this.clear()
     }
 
     render() {

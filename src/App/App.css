@@ -36,3 +36,11 @@ table td,
 table th {
     text-align: left;
 }
+
+.Toastify__toast-container--top-center{
+    margin-left: -300px !important;
+}
+
+.Toastify__toast-container{
+    width:600px !important;
+}
