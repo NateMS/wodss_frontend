@@ -15,23 +15,21 @@ class EmployeeUpdateDialogue extends Component {
       lastName: 'this.state.lastName',
       emailAddress: '',
       showModal: false,
+      contracts: []
     }
 
-    this.getContracts = this.getContracts.bind(this)
     this.getAllocations = this.getAllocations.bind(this)
   }
 
   componentDidMount() {
+    let employeeId = this.props.employee.id
     this.setState({
       active: this.props.employee.active,
       firstName: this.props.employee.firstName,
       lastName: this.props.employee.lastName,
-      emailAddress: this.props.employee.emailAddress
+      emailAddress: this.props.employee.emailAddress,
+      contracts: _.filter(this.props.contracts, function (c) { return c.employeeId === employeeId })
     })
-  }
-
-  getContracts = (employeeId) => {
-    return _.filter(this.props.contracts, function (c) { return c.employeeId === employeeId; })
   }
 
   getAllocations = (contractId) => {
@@ -73,8 +71,8 @@ class EmployeeUpdateDialogue extends Component {
   }
 
   create = (contract) => {
-    _.concat(this.props.contracts, contract)
-    // TODO probably does not work
+    this.setState({contracts: [...this.state.contracts, contract]})
+    this.props.add_contract(contract)
   }
 
   render() {
@@ -135,7 +133,7 @@ class EmployeeUpdateDialogue extends Component {
                 </Row>
 
                 {
-                  this.getContracts(this.props.employee.id).map(contract => {
+                  this.state.contracts.map(contract => {
                     return <ContractCollapse key={contract.id} contract={contract} />
                   })
                 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { Table } from 'reactstrap'
 import EmployeeTableElement from './EmployeeTableElement'
 
-const EmployeeTable = ({ update, _delete, fte, emps, contracts, allocations}) => <section>
+const EmployeeTable = ({ update, _delete, fte, emps, contracts, allocations, add_contract}) => <section>
     <Table>
         <thead>
             <tr>
@@ -24,6 +24,7 @@ const EmployeeTable = ({ update, _delete, fte, emps, contracts, allocations}) =>
                                         //    fte = { fte.map(fte => { if (fte.id === employee.id) return fte.employeeId}) }
                                            employee={ employee } 
                                            contracts = {contracts}
+                                           add_contract = { add_contract }
                                            allocations = {allocations}
                                            /> 
                 }

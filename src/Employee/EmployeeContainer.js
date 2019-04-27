@@ -67,6 +67,10 @@ class EmployeeContainer extends Component {
     this.setState({ emps: _.map(this.state.emps, e => e.id === employee.id ? employee : e) })
   }
 
+  addContract = (contract) => {
+    this.setState({ contracts: _.concat(this.state.contracts, contract) })
+  }
+
   _delete = id => {
     this.setState({ emps : _.reject(this.state.emps, { id: id })})
     employeeService.remove(id)
@@ -82,7 +86,7 @@ class EmployeeContainer extends Component {
     return <div>
       { createDialogue }
       <h3>Employees</h3>
-      <EmployeeTable update = { this.update } _delete = { this._delete } fte = { this.getFTE} emps = { this.state.emps } contracts = { this.state.contracts } allocations = { this.state.allocations }/>
+      <EmployeeTable update = { this.update } add_contract = { this.addContract } _delete = { this._delete } fte = { this.getFTE} emps = { this.state.emps } contracts = { this.state.contracts } allocations = { this.state.allocations }/>
     </div>
   }
 }
