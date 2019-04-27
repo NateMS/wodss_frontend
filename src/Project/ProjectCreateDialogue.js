@@ -8,11 +8,19 @@ class ProjectCreateDialog extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { name: '', projectManagerId: '', ftePercentage: '', startDate: new Date(), endDate: new Date(), showModal: false }
+    this.state = { 
+      name: '',
+      projectManagerId: '',
+      ftePercentage: '',
+      startDate: new Date(),
+      endDate: new Date(),
+      pms: this.props.pms.filter(pm => pm.active),
+      showModal: false
+    }
   }
 
   open = () => {
-    this.setState({ projectManagerId: this.props.pms[0].id, showModal: true })
+    this.setState({ projectManagerId: this.state.pms[0].id, showModal: true })
   }
 
   close = () => {
@@ -105,7 +113,7 @@ class ProjectCreateDialog extends Component {
                 <Col md={9}>
                   <select name="projectManagerId" id="formPM" value={this.state.projectManagerId} onChange={this.onChange} >
                     { 
-                      this.props.pms.map(pm =>
+                      this.state.pms.map(pm =>
                       <option key={pm.id} value={pm.id}>{pm.firstName} {pm.lastName}</option>
                     )}
                   </select>

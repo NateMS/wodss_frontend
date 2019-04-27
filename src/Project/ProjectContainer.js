@@ -11,7 +11,7 @@ class ProjectContainer extends Component {
   constructor(props) {
     super(props)
     this.state = { ps: [], pms: [] }
-    employeeService.getAll('PROJECTMANAGER').then(prmngs =>  this.setState({ pms: prmngs })); // this.setState({ pms: prmngs.filter(pm => pm.active)
+    employeeService.getAll('PROJECTMANAGER').then(prmngs =>  this.setState({ pms: prmngs }));
   }
 
   generateIndex = projects =>
@@ -41,7 +41,6 @@ class ProjectContainer extends Component {
   }
 
   addPmToProject = (project) => {
-    console.log(project)
     project.pm = this.state.pms.find(pm => pm.id === project.projectManagerId);
     return project;
   }
@@ -50,7 +49,7 @@ class ProjectContainer extends Component {
     return <div>
       <ProjectCreateDialogue create={this.create} pms={this.state.pms} projects={this.state.ps} />
       <h3>Projects</h3>
-      <ProjectTable update={this.update} _delete={this._delete} ps={this.state.ps} />
+      <ProjectTable update={this.update} _delete={this._delete} ps={this.state.ps} pms={this.state.pms} />
     </div>
   }
 }
