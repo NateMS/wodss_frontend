@@ -8,19 +8,19 @@ class ProjectCreateDialog extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { name: '', projectManagerId: '', ftePercentage: '', startDate: new Date(), endDate: new Date(), showModal: false }
+    this.state = { name: '', pms: [], projectManagerId: '', ftePercentage: '', startDate: new Date(), endDate: new Date(), showModal: false }
   }
 
   open = () => {
-    if (this.props.pms) {
-      this.setState({ projectManagerId: this.props.pms[0].id, showModal: true })
+    if (this.state.pms.length > 0) {
+      this.setState({ projectManagerId: this.state.pms[0].id, showModal: true })
     } else {
       this.setState({ showModal: true })
     }
   }
 
   componentDidMount() {
-   // this.setState({ projectManagerId: this.props.pms[0].id })
+    this.setState({ pms: this.props.pms })
   }
 
   close = () => {
@@ -29,7 +29,7 @@ class ProjectCreateDialog extends Component {
   }
 
   clear = () => {
-    this.state = { name: '', projectManagerId: '', ftePercentage: '', startDate: new Date(), endDate: new Date() }
+    this.setState = ({ name: '', projectManagerId: '', ftePercentage: '', startDate: new Date(), endDate: new Date() })
   }
 
   onChange = event => {
@@ -112,8 +112,8 @@ class ProjectCreateDialog extends Component {
                      </Label>
                 <Col md={9}>
                   <select name="projectManagerId" id="formPM" value={this.state.projectManagerId} onChange={this.onChange} >
-                    { 
-                      this.props.pms.map(pm =>
+                    {
+                      this.state.pms.map(pm =>
                       <option key={pm.id} value={pm.id}>{pm.firstName} {pm.lastName}</option>
                     )}
                   </select>

@@ -18,7 +18,7 @@ class ProjectContainer extends Component {
     projectService.getAll()
       .then(projects => {
         projects = projects.map(project => {
-          return this.addPmToProject(this.addAllocationsToProject(project))
+          return this.addAllocationsToProject(project)
         })
         this.setState({ ps: projects })
       })
@@ -28,21 +28,16 @@ class ProjectContainer extends Component {
     _.get(_.last(projects), 'id', 0) + 1
 
   create = (project) => {
-    this.setState({ ps: _.concat(this.state.ps, this.addPmToProject(project)) })
+    this.setState({ ps: _.concat(this.state.ps, project) })
   }
 
   update = (project) => {
-    this.setState({ ps: _.map(this.state.ps, p => p.id === project.id ? this.addPmToProject(project) : p) })
+    this.setState({ ps: _.map(this.state.ps, p => p.id === project.id ? project : p) })
   }
 
   _delete = id => {
     projectService.remove(id)
     this.setState({ ps: _.reject(this.state.ps, { id: id }) })
-  }
-
-  addPmToProject = (project) => {
-    project.pm = this.state.pms.find(pm => pm.id === project.projectManagerId);
-    return project;
   }
 
   addAllocationsToProject = (project) => {

@@ -25,15 +25,9 @@ function getAll(query) {
     const requestOptions = { method: 'GET', headers: authHeader() };
     return fetch(url, requestOptions)
         .then(handleResponse)
-        .then(allocations => {
-            projectService.getAll().then(projects => {
-                allocations = allocations.map(allocation => {
-                    return addProjectToAllocation(allocation, projects)
-                  })
-            })
-            
-            return allocations;
-        })
+        .then(allocations => 
+            projectService.getAll()
+            .then(projects => allocations.map(allocation => addProjectToAllocation(allocation, projects))))
 }
 
 function get(allocationID) {
@@ -45,10 +39,9 @@ function get(allocationID) {
     return fetch(`${allocationURL}/${allocationID}`, requestOptions)
         .then(handleResponse)
         .then(allocation => {
-            projectService.get(allocation.projectId).then(project => {
-                allocation = addProjectToAllocation(allocation, [project])
+            return projectService.get(allocation.projectId).then(project => {
+                return addProjectToAllocation(allocation, [project])
             })
-            return allocation
         })
 }
 
@@ -62,7 +55,9 @@ function create(allocation) {
     return fetch(`${allocationURL}`, requestOptions)
         .then(handleResponse)
         .then(allocation => {
-            return allocation;
+            return projectService.get(allocation.projectId).then(project => {
+                return addProjectToAllocation(allocation, [project])
+            })
         })
 }
 
@@ -73,13 +68,12 @@ function update(allocation) {
         body: JSON.stringify(allocation)
     };
 
-    console.log(allocation)
-    console.log(`${allocationURL}/${allocation.id}`)
-
     return fetch(`${allocationURL}/${allocation.id}`, requestOptions)
         .then(handleResponse)
         .then(allocation => {
-            return allocation;
+            return projectService.get(allocation.projectId).then(project => {
+                return addProjectToAllocation(allocation, [project])
+            })
         })
 }
 

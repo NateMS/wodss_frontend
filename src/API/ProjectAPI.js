@@ -1,6 +1,7 @@
 import { authHeader } from '../Helpers/AuthHeader';
 import { handleResponse } from '../Helpers/HandleResponse';
 import { getUrl } from '../Services/API.service';
+import { employeeService } from './EmployeeAPI';
 
 const projectURL = getUrl() + '/project';
 
@@ -20,10 +21,12 @@ function getAll(projectManagerId, fromDate, toDate) {
 
     const requestOptions = { method: 'GET', headers: authHeader() };
     return fetch(url, requestOptions)
-            .then(handleResponse)
-            .then(projects => {
-                return projects;
+        .then(handleResponse)
+        .then(projects => {
+            return employeeService.getAll("PROJECTMANAGER").then(pms => {
+                return projects.map(project => addPmToProject(project, pms))
             })
+        })
 }
 
 function get(projectId) {
@@ -33,24 +36,25 @@ function get(projectId) {
     }
 
     return fetch(`${projectURL}/${projectId}`, requestOptions)
-            .then(handleResponse)
-            .then(project => {
-                return project;
-            })
+        .then(handleResponse)
+        .then(project => {
+            return employeeService.get(project.projectManagerId).then(employee => addPmToProject(project, [employee]))
+        })
 }
 
 function create(project) {
-    const requestOptions = { 
-        method: 'POST', 
-        headers: authHeader(), 
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
         body: JSON.stringify(project)
     };
 
-    console.log(JSON.stringify(project))
-
     return fetch(`${projectURL}`, requestOptions)
-            .then(handleResponse)
-    }
+        .then(handleResponse)
+        .then(project => {
+            return employeeService.get(project.projectManagerId).then(employee => addPmToProject(project, [employee]))
+        })
+}
 
 function update(project) {
     const requestOptions = {
@@ -60,10 +64,10 @@ function update(project) {
     };
 
     return fetch(`${projectURL}/${project.id}`, requestOptions)
-            .then(handleResponse)
-            .then(project => {
-                return project;
-            })
+        .then(handleResponse)
+        .then(project => {
+            return employeeService.get(project.projectManagerId).then(employee => addPmToProject(project, [employee]))
+        })
 }
 
 function remove(projectId) {
@@ -73,5 +77,10 @@ function remove(projectId) {
     };
 
     return fetch(`${projectURL}/${projectId}`, requestOptions)
-            .then(handleResponse)
+        .then(handleResponse)
+}
+
+function addPmToProject(project, pms) {
+    project.pm = pms.find(pm => pm.id === project.projectManagerId);
+    return project;
 }
