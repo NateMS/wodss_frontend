@@ -16,7 +16,7 @@ class Me extends Component {
     componentDidMount() {
         authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }, () => {
             contractService.getAll().then(contracts => {
-                contracts = contracts.filter(contract => contract.employeeId === this.state.currentUser.id)
+                contracts = contracts.filter(contract => contract.employeeId === this.state.currentUser.decoded.id)
                 this.setState({ contracts: contracts })
             })
         }))
