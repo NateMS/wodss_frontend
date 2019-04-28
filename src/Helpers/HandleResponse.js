@@ -2,13 +2,35 @@
 import { toast } from 'react-toastify';
 
 export function handleResponse(response) {
+    let toastSettings = {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true
+    }
+
     if (response.ok) {
-        return response.json()
+        if (response.status === 204) {
+            toast.success("Successfully deleted!", toastSettings)
+            return true;
+        }
+
+        let json = response.json().then(json => {
+            if (response.status === 201) {
+                toast.success("Successfully created!", toastSettings)
+            }
+            return json
+        });
+        
+        return json
     } else {
         const error = response.text()
+        console.log(error);
         error.then(e => {
-            console.log(e)
             let message = e
+            if (!message) message = response.status + " - " + response.statusText
             try {
                 let json = JSON.parse(e)
                 if (json.hasOwnProperty('message')) {
@@ -17,16 +39,10 @@ export function handleResponse(response) {
                     message = json.error
                 }
             } catch (e) {
+                console.log(e)
             }
 
-            toast.error(message, {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-            })
+            toast.error(message, toastSettings)
         })
 
         return Promise.reject(error);
