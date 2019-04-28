@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Col, Input } from 'reactstrap'
-import _ from 'lodash'
 import DatePicker from 'react-date-picker'
 import {contractService} from '../API/ContractAPI'
 import { dateToTimestamp } from '../Helpers/DateHelper'

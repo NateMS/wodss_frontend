@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Col, Input } from 'reactstrap'
 import { projectService } from '../API/ProjectAPI'
-import { dateToReadable, dateToTimestamp } from '../Helpers/DateHelper'
+import { dateToTimestamp } from '../Helpers/DateHelper'
 import DatePicker from 'react-date-picker'
 
 class ProjectCreateDialog extends Component {
@@ -59,7 +59,7 @@ class ProjectCreateDialog extends Component {
   }
 
   render() {
-    
+
     return (
       <div>
         <Button color="success" onClick={this.open} className='float-right btn-list-btn'>Add Project</Button>
@@ -93,7 +93,7 @@ class ProjectCreateDialog extends Component {
                   Start Date
                      </Label>
                 <Col md={9}>
-                  <DatePicker name="startDate" value={this.state.startDate} onChange={e => this.onChange({target: {name: 'startDate', value:e}})}/>
+                  <DatePicker name="startDate" value={this.state.startDate} onChange={e => this.onChange({ target: { name: 'startDate', value: e } })} />
                 </Col>
               </FormGroup>
 
@@ -102,7 +102,7 @@ class ProjectCreateDialog extends Component {
                   End Date
                      </Label>
                 <Col md={9}>
-                <DatePicker name="endDate" value={this.state.endDate} onChange={e => this.onChange({target: {name: 'endDate', value:e}})}/>
+                  <DatePicker name="endDate" value={this.state.endDate} onChange={e => this.onChange({ target: { name: 'endDate', value: e } })} />
                 </Col>
               </FormGroup>
 
@@ -114,8 +114,8 @@ class ProjectCreateDialog extends Component {
                   <select name="projectManagerId" id="formPM" value={this.state.projectManagerId} onChange={this.onChange} >
                     {
                       this.state.pms.map(pm =>
-                      <option key={pm.id} value={pm.id}>{pm.firstName} {pm.lastName}</option>
-                    )}
+                        <option key={pm.id} value={pm.id}>{pm.firstName} {pm.lastName}</option>
+                      )}
                   </select>
                 </Col>
               </FormGroup>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Row, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Col, Input } from 'reactstrap'
 import { projectService } from '../API/ProjectAPI'
-import { dateToReadable, dateToTimestamp } from '../Helpers/DateHelper'
+import { dateToTimestamp } from '../Helpers/DateHelper'
 import DatePicker from 'react-date-picker'
 import AllocationTable from '../Allocation/AllocationTable';
 import AllocationCreateDialogue from '../Allocation/AllocationCreateDialogue';

@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Button, Modal, ModalBody, ModalHeader, Row, FormGroup, Label, Col, Input } from 'reactstrap'
+import { Button, Modal, ModalBody, ModalHeader, Row, Col } from 'reactstrap'
 import _ from 'lodash'
 import ContractCollapse from '../Contract/ContractCollapse'
-import { dateToReadable } from '../Helpers/DateHelper'
 
 class EmployeeShowDialogue extends Component {
 

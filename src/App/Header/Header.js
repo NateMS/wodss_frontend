@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import './Header.css';
 
 import { authenticationService } from './../../Services/Authentication.service'
@@ -22,7 +22,6 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    console.log(authenticationService.currentUserValue)
     authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
     this.setState({name: authenticationService.currentUserValue().decoded.firstName + " " + authenticationService.currentUserValue().decoded.lastName})
   }

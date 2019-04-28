@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import { authenticationService } from '../Services/Authentication.service'
-import { history } from '../Helpers/History';
 import Header from './Header/Header';
 import Main from './Main/Main';
-import Footer from './Footer/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -13,25 +11,21 @@ class App extends Component {
     super(props);
 
     this.state = {
-        currentUser: null
+      currentUser: null
     };
-}
+  }
 
-componentDidMount() {
+  componentDidMount() {
     authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
-}
+  }
 
-logout() {
-    authenticationService.logout();
-    history.push('/login');
-}
   render() {
     let header
-    if(this.state.currentUser) header = <Header />
+    if (this.state.currentUser) header = <Header />
     return (
       <div className="App">
-      <ToastContainer />
-        { header }
+        <ToastContainer />
+        {header}
         <Main />
         {/* <Footer /> */}
       </div>

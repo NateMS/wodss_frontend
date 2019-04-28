@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { Button } from 'reactstrap'
 import ProjectShowDialogue from './ProjectShowDialogue'
 import ProjectUpdateDialogue from './ProjectUpdateDialogue'
-import { dateToReadable, dateToTimestamp } from '../Helpers/DateHelper'
+import { dateToReadable } from '../Helpers/DateHelper'
 import { authenticationService } from '../Services/Authentication.service'
 
 class ProjectTableElement extends Component {

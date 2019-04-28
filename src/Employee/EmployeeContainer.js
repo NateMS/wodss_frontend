@@ -50,7 +50,7 @@ class EmployeeContainer extends Component {
   }
 
   getAllocations(contractId){
-    return _.filter(this.state.allocations, function(a) { return a.contractId == contractId})
+    return _.filter(this.state.allocations, function(a) { return a.contractId === contractId})
   }
 
   create = (employee) => {

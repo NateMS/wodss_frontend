@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalBody, ModalHeader, Col, Row } from 'reactstrap'
-import { dateToReadable, dateToTimestamp } from '../Helpers/DateHelper'
+import { dateToReadable } from '../Helpers/DateHelper'
 import AllocationTable from '../Allocation/AllocationTable';
 
 class ProjectShowDialog extends Component {
