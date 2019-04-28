@@ -9,7 +9,7 @@ import { authenticationService } from '../Services/Authentication.service'
 class ProjectTableElement extends Component {
     render() {
         let projectUpdate, projectDelete
-        let UpdateBtn = <ProjectUpdateDialogue update={this.props.update} project={this.props.project} pms={this.props.pms} deleteAllocation={this.props.deleteAllocation} createAllocation={this.props.createAllocation} />
+        let UpdateBtn = <ProjectUpdateDialogue update={this.props.update} project={this.props.project} pms={this.props.pms} updateAllocation={this.props.updateAllocation} deleteAllocation={this.props.deleteAllocation} createAllocation={this.props.createAllocation} />
 
         if (authenticationService.isAdmin()) {
             projectDelete = <Button color='danger' onClick={_.partial(this.props._delete, this.props.project.id)} className='float-left btn-list-btn' >Delete</Button>

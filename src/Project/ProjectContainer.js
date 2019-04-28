@@ -38,9 +38,18 @@ class ProjectContainer extends Component {
   }
 
   createAllocation = (allocation) => {
-    this.setState({allocations: _.concat(this.state.allocations, allocation)}, () => {
+    this.setState({ allocations: _.concat(this.state.allocations, allocation) }, () => {
       let project = this.state.ps.find(project => project.id === allocation.projectId)
       project = this.addAllocationsToProject(project)
+      this.update(project)
+    })
+  }
+
+  updateAllocation = (allocation) => {
+    this.setState({ allocations: _.map(this.state.allocations, a => a.id === allocation.id ? allocation : a) }, () => {
+      let project = this.state.ps.find(project => project.id === allocation.projectId)
+      project = this.addAllocationsToProject(project)
+      console.log(project.allocations)
       this.update(project)
     })
   }
@@ -75,27 +84,28 @@ class ProjectContainer extends Component {
     return project;
   }
 
-  addContractToAllocation = async (allocation) => {
-    const contract = await contractService.get(allocation.contractId);
-    allocation.contract = contract;
-    allocation = this.addEmployeeToAllocation(allocation);
-    return allocation;
+  addContractToAllocation = (allocation) => {
+    return contractService.get(allocation.contractId).then(contract => {
+      allocation.contract = contract;
+      return this.addEmployeeToAllocation(allocation).then(allocation => allocation);
+    });
   }
 
-  addEmployeeToAllocation = async (allocation) => {
-    const employee = await employeeService.get(allocation.contract.employeeId);
-    allocation.employee = employee;
-    return allocation;
+  addEmployeeToAllocation = (allocation) => {
+    return employeeService.get(allocation.contract.employeeId).then(employee => {
+      allocation.employee = employee;
+      return allocation;
+    });
   }
 
   render() {
     let projectCreateDialogue
-    if(authenticationService.isAdmin()) projectCreateDialogue = <ProjectCreateDialogue create={this.create} pms={this.state.pms} />
+    if (authenticationService.isAdmin()) projectCreateDialogue = <ProjectCreateDialogue create={this.create} pms={this.state.pms} />
 
     return <div>
       {projectCreateDialogue}
       <h3>Projects</h3>
-      <ProjectTable update={this.update} _delete={this._delete} deleteAllocation={this.deleteAllocation} createAllocation={this.createAllocation} ps={this.state.ps} pms={this.state.pms} />
+      <ProjectTable update={this.update} _delete={this._delete} deleteAllocation={this.deleteAllocation} updateAllocation={this.updateAllocation} createAllocation={this.createAllocation} ps={this.state.ps} pms={this.state.pms} />
     </div>
   }
 }

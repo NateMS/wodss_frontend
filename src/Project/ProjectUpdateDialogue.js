@@ -6,7 +6,7 @@ import DatePicker from 'react-date-picker'
 import AllocationTable from '../Allocation/AllocationTable';
 import AllocationCreateDialogue from '../Allocation/AllocationCreateDialogue';
 
-class ProjectUpdateDialog extends Component {
+class ProjectUpdateDialogue extends Component {
 
   constructor(props) {
     super(props)
@@ -124,7 +124,7 @@ class ProjectUpdateDialog extends Component {
                 </Col>
                 <AllocationCreateDialogue project={this.props.project} createAllocation={this.props.createAllocation} />
                 <Col md={12}>
-                  <AllocationTable allocations={this.props.project.allocations} editable={true} nameColumn={true} deleteAllocation={this.props.deleteAllocation} />
+                  <AllocationTable allocations={this.props.project.allocations} editable={true} nameColumn={true} update={this.props.updateAllocation} deleteAllocation={this.props.deleteAllocation} />
                 </Col>
               </Row>
 
@@ -141,4 +141,4 @@ class ProjectUpdateDialog extends Component {
   }
 }
 
-export default ProjectUpdateDialog
+export default ProjectUpdateDialogue
