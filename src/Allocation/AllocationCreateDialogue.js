@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import DatePicker from 'react-date-picker'
 import { Button, Modal, ModalBody, ModalHeader, Form, FormGroup, Label, Col, Input } from 'reactstrap'
-import { dateToTimestamp } from '../Helpers/DateHelper'
+import { dateToTimestamp, dateToReadable } from '../Helpers/DateHelper'
 import { allocationService } from '../API/AllocationAPI'
 import { contractService } from '../API/ContractAPI'
 import { employeeService } from '../API/EmployeeAPI'
-import { Alert } from '../Components/Alert/Alert'
 
 class AllocationCreateDialogue extends Component {
     constructor(props) {
@@ -20,7 +19,6 @@ class AllocationCreateDialogue extends Component {
             contracts: [],
             employees: [],
             contractDisplay: '',
-            alert: ''
         }
     }
 
@@ -30,10 +28,10 @@ class AllocationCreateDialogue extends Component {
             this.setState({contracts: contracts})
           }
         )
-        employeeService.getAll("DEVELOPER").then(
+        employeeService.getAll().then(
           employees => {
             this.setState({employees: employees})
-            this.setState({employeeId: employees[0].id})
+            this.setState({employeeId: employees[0].id.toString()})
           }
         )
     }
@@ -47,24 +45,26 @@ class AllocationCreateDialogue extends Component {
     }
 
     onChange = event => {
-        this.setState({ [event.target.name]: event.target.value })
+        this.setState({ [event.target.name]: event.target.value }, this.displayFilteredContract)
+    }
 
-        let filteredContract = null
+    displayFilteredContract = () =>{
+        let filteredContract
         if (this.state.employeeId && this.state.startDate && this.state.endDate && this.state.pensumPercentage) {
-            filteredContract = this.state.contracts.find(contract =>
-                contract.startDate >= this.state.startDate
-                && contract.endDate <= this.state.endDate
-                && contract.employeeId === this.state.employeeId
-                && contract.pensumPercentage <= this.state.pensumPercentage
+            filteredContract = this.state.contracts.find(contract =>{
+                return dateToTimestamp(contract.startDate) <= dateToTimestamp(this.state.startDate)
+                && dateToTimestamp(contract.endDate) >= dateToTimestamp(this.state.endDate)
+                && parseInt(contract.employeeId) === parseInt(this.state.employeeId)
+                && parseInt(contract.pensumPercentage) >= parseInt(this.state.pensumPercentage)
+            }
             )
-            
-             console.log(filteredContract);
         }
 
         if (filteredContract) {
-            this.setState({ ContractId: filteredContract.id, ContractDisplay: filteredContract.startDate + " - " + filteredContract.endDate + " (" + filteredContract.pensumPercentage + "%)" })
+            this.setState({ contract: filteredContract, ContractDisplay: dateToReadable(filteredContract.startDate) + " - " + dateToReadable(filteredContract.endDate) + " (" + filteredContract.pensumPercentage + "%)" })
+
         } else {
-            this.setState({ ContractId: '', ContractDisplay: " No contracts found" })
+            this.setState({ contract: '', ContractDisplay: " No contracts found" })
         }
     }
 
@@ -76,46 +76,17 @@ class AllocationCreateDialogue extends Component {
             endDate: dateToTimestamp(this.state.endDate),
             pensumPercentage: parseInt(this.state.pensumPercentage),
             employeeId: this.state.employeeId,
-            contractId: this.state.contractId,
+            contractId: this.state.contract.id,
+            projectId: this.props.project.id
         }
 
-        let messages = []
-
-        if (this.state.startDate >= this.state.endDate) {
-            messages.push("Start date can't be same or bigger than end date")
-        }
-
-        if (this.state.startDate < this.props.project.startDate) {
-            messages.push("Start date smaller than project start date")
-        }
-
-        if (this.state.endDate < this.props.project.endDate) {
-            messages.push("End date smaller than project end date")
-        }
-
-        if (parseInt(this.state.pensumPercentage) === 0) {
-            messages.push("Please set a valid pensum")
-        }
-
-        if (!this.state.employeeId) {
-            messages.push("Please select an employee")
-        }
-
-        if (!this.state.contractId) {
-            messages.push("No valid contract found")
-        }
-
-        if (messages.length > 0) {
-            this.setState({ alert: <Alert type="danger" messages={messages}/>})
-        } else {
-            allocationService.create(allocation)
-            .then(allocation => {
-                console.log(allocation)
-                this.props.create(allocation)
-            })
+        let self = this
+        allocationService.create(allocation)
+        .then(allocation => {
+            self.props.createAllocation(allocation)
+        })
 
         this.clear()
-        } 
     }
 
     clear = () => {
@@ -126,7 +97,6 @@ class AllocationCreateDialogue extends Component {
             ContractDisplay: '',
             employeeId: 0,
             showModal: false,
-            alert: ''
         })
     }
 
@@ -139,7 +109,6 @@ class AllocationCreateDialogue extends Component {
                     Add developer to project '{this.props.project.name}'
           </ModalHeader>
                 <ModalBody>
-                    {this.state.alert}
                     <Form>
                         <FormGroup row>
                             <Label md={2} for="startDate">Start Date</Label>

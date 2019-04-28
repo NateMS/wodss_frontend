@@ -10,7 +10,7 @@ class ProjectTableElement extends Component {
     render() {
         let project = this.props.project
         let projectUpdate, projectDelete = '';
-        let UpdateBtn = <ProjectUpdateDialogue update={this.props.update} project={project} pms={this.props.pms} />
+        let UpdateBtn = <ProjectUpdateDialogue update={this.props.update} project={project} pms={this.props.pms} createAllocation={this.props.createAllocation} />
 
         if (authenticationService.isAdmin) {
             projectDelete = <Button color='danger' onClick={_.partial(this.props._delete, project.id)} className='float-left btn-list-btn' >Delete</Button>

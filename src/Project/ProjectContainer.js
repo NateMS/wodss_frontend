@@ -13,15 +13,20 @@ class ProjectContainer extends Component {
   constructor(props) {
     super(props)
     this.state = { ps: [], pms: [], allocations: [] }
+
+    let self = this
     employeeService.getAll('PROJECTMANAGER').then(prmngs => this.setState({ pms: prmngs }));
-    allocationService.getAll().then(allocations => this.setState({ allocations: allocations }));
-    projectService.getAll()
+    allocationService.getAll().then(allocations => {
+      this.setState({ allocations: allocations })
+      projectService.getAll()
       .then(projects => {
         projects = projects.map(project => {
-          return this.addAllocationsToProject(project)
+          return self.addAllocationsToProject(project)
         })
-        this.setState({ ps: projects })
+        self.setState({ ps: projects })
       })
+    });
+
   }
 
   generateIndex = projects =>
@@ -29,6 +34,10 @@ class ProjectContainer extends Component {
 
   create = (project) => {
     this.setState({ ps: _.concat(this.state.ps, project) })
+  }
+
+  createAllocation = (allocation) => {
+    this.setState({allocations: _.concat(this.state.allocations, allocation)})
   }
 
   update = (project) => {
@@ -41,6 +50,7 @@ class ProjectContainer extends Component {
   }
 
   addAllocationsToProject = (project) => {
+    console.log(this.state.allocations)
     project.allocations = this.state.allocations.filter(allocation => allocation.projectId === project.id);
     if (!project.allocations) project.allocations = [];
     project.usedFTE = 0
@@ -69,7 +79,7 @@ class ProjectContainer extends Component {
     return <div>
       <ProjectCreateDialogue create={this.create} pms={this.state.pms} projects={this.state.ps} />
       <h3>Projects</h3>
-      <ProjectTable update={this.update} _delete={this._delete} ps={this.state.ps} pms={this.state.pms} />
+      <ProjectTable update={this.update} _delete={this._delete} createAllocation={this.createAllocation} ps={this.state.ps} pms={this.state.pms} />
     </div>
   }
 }

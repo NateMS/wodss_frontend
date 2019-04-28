@@ -24,12 +24,12 @@ class ProjectCreateDialog extends Component {
   }
 
   close = () => {
-    this.clear()
     this.setState({ showModal: false })
+    this.clear()
   }
 
   clear = () => {
-    this.setState = ({ name: '', projectManagerId: '', ftePercentage: '', startDate: new Date(), endDate: new Date() })
+    this.setState({ name: '', projectManagerId: '', ftePercentage: '', startDate: new Date(), endDate: new Date() })
   }
 
   onChange = event => {

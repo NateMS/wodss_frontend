@@ -33,6 +33,10 @@ class ProjectUpdateDialog extends Component {
     this.setState({ [event.target.name]: event.target.value })
   }
 
+  create = () => {
+    this.setState({})
+  }
+
   onSubmit = event => {
     event.preventDefault()
 
@@ -120,7 +124,7 @@ class ProjectUpdateDialog extends Component {
                 <Col md={6}>
                   <h4>Assigned Developers</h4>
                 </Col>
-                <AllocationCreateDialogue project={this.props.project} />
+                <AllocationCreateDialogue project={this.props.project} createAllocation={this.createAllocation} />
                 <Col md={12}>
                   <AllocationTable allocations={this.props.project.allocations} editable={true} nameColumn={true} />
                 </Col>
