@@ -52,6 +52,7 @@ class ProjectUpdateDialogue extends Component {
     let self = this
     projectService.update(project)
       .then(project => {
+        project.allocations = self.props.project.allocations
         self.props.update(project)
         self.setState({ showModal: false })
       })
