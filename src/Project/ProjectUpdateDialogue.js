@@ -49,8 +49,6 @@ class ProjectUpdateDialog extends Component {
       projectManagerId: this.state.projectManagerId
     }
 
-    console.log(project);
-
     let self = this
     projectService.update(project)
       .then(project => {
@@ -124,9 +122,9 @@ class ProjectUpdateDialog extends Component {
                 <Col md={6}>
                   <h4>Assigned Developers</h4>
                 </Col>
-                <AllocationCreateDialogue project={this.props.project} createAllocation={this.createAllocation} />
+                <AllocationCreateDialogue project={this.props.project} createAllocation={this.props.createAllocation} />
                 <Col md={12}>
-                  <AllocationTable allocations={this.props.project.allocations} editable={true} nameColumn={true} />
+                  <AllocationTable allocations={this.props.project.allocations} editable={true} nameColumn={true} deleteAllocation={this.props.deleteAllocation} />
                 </Col>
               </Row>
 

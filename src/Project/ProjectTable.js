@@ -2,7 +2,7 @@ import React from 'react'
 import { Table } from 'reactstrap'
 import ProjectTableElement from './ProjectTableElement'
 
-const ProjectTable = ({ update, _delete, ps, pms, createAllocation}) => <section>
+const ProjectTable = ({ update, _delete, ps, pms, createAllocation, deleteAllocation}) => <section>
     <Table>
         <thead>
             <tr>
@@ -23,6 +23,7 @@ const ProjectTable = ({ update, _delete, ps, pms, createAllocation}) => <section
                                            _delete={ _delete }
                                            project={ project }
                                            createAllocation={createAllocation} 
+                                           deleteAllocation={deleteAllocation} 
                                            pms={ pms }/> 
         })}
         </tbody>

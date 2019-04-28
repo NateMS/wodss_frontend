@@ -84,9 +84,9 @@ class AllocationCreateDialogue extends Component {
         allocationService.create(allocation)
         .then(allocation => {
             self.props.createAllocation(allocation)
+            self.clear()
         })
 
-        this.clear()
     }
 
     clear = () => {

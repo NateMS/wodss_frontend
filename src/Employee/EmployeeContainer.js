@@ -1,17 +1,17 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import _ from 'lodash';
 import { employeeService } from '../API/EmployeeAPI'
 import { contractService } from "../API/ContractAPI";
 import { allocationService } from "../API/AllocationAPI";
 import EmployeeCreateDialogue from './EmployeeCreateDialogue'
 import EmployeeTable from './EmployeeTable'
-import {authenticationService} from '../Services/Authentication.service'
+import { authenticationService } from '../Services/Authentication.service'
 
 class EmployeeContainer extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state = { 
+    this.state = {
       emps: [],
       contracts: [],
       allocations: []
@@ -23,34 +23,34 @@ class EmployeeContainer extends Component {
 
   componentDidMount() {
     contractService.getAll().then(
-      contracts =>{
-        this.setState({contracts: contracts})
+      contracts => {
+        this.setState({ contracts: contracts })
       }
     )
     employeeService.getAll().then(
       employees => {
-        this.setState({emps: employees})
+        this.setState({ emps: employees })
       }
     )
 
     allocationService.getAll().then(
       allocations => {
-        this.setState({allocations: allocations})
+        this.setState({ allocations: allocations })
       }
     )
   }
 
-  getFTE(employeeId){
+  getFTE(employeeId) {
     let employeeContracts = this.getContracts(employeeId)
     return _.sumBy(employeeContracts, function (c) { return c.pensumPercentage })
   }
 
-  getContracts(employeeId){
-    return _.filter(this.state.contracts, function(c) { return c.employeeId === employeeId; })
+  getContracts(employeeId) {
+    return _.filter(this.state.contracts, function (c) { return c.employeeId === employeeId; })
   }
 
-  getAllocations(contractId){
-    return _.filter(this.state.allocations, function(a) { return a.contractId === contractId})
+  getAllocations(contractId) {
+    return _.filter(this.state.allocations, function (a) { return a.contractId === contractId })
   }
 
   create = (employee) => {
@@ -66,21 +66,33 @@ class EmployeeContainer extends Component {
   }
 
   _delete = id => {
-    this.setState({ emps : _.reject(this.state.emps, { id: id })})
+    this.setState({ emps: _.reject(this.state.emps, { id: id }) })
     employeeService.remove(id)
+  }
+
+  deleteAllocation = () => {
+
   }
 
   render() {
     let createDialogue
 
-    if(authenticationService.isAdmin()){
-      createDialogue = <EmployeeCreateDialogue create = { this.create }/>
+    if (authenticationService.isAdmin()) {
+      createDialogue = <EmployeeCreateDialogue create={this.create} />
     }
 
     return <div>
-      { createDialogue }
+      {createDialogue}
       <h3>Employees</h3>
-      <EmployeeTable update = { this.update } add_contract = { this.addContract } _delete = { this._delete } fte = { this.getFTE} emps = { this.state.emps } contracts = { this.state.contracts } allocations = { this.state.allocations }/>
+      <EmployeeTable
+        update={this.update}
+        add_contract={this.addContract}
+        _delete={this._delete}
+        fte={this.getFTE}
+        emps={this.state.emps}
+        contracts={this.state.contracts}
+        allocations={this.state.allocations}
+        deleteAllocation={this.deleteAllocation} />
     </div>
   }
 }

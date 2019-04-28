@@ -13,7 +13,7 @@ class EmployeeTableElement extends Component {
         let deleteButton
 
         if (authenticationService.isAdmin()) {
-            viewEditDialogue = <EmployeeUpdateDialogue add_contract={this.props.add_contract} update={this.props.update} employee={this.props.employee} fte={this.props.fte} contracts={this.props.contracts} allocations={this.props.allocations} />
+            viewEditDialogue = <EmployeeUpdateDialogue add_contract={this.props.add_contract} update={this.props.update} employee={this.props.employee} fte={this.props.fte} contracts={this.props.contracts} allocations={this.props.allocations} deleteAllocation={this.props.deleteAllocation}/>
             deleteButton = <Button color='danger' onClick={_.partial(this.props._delete, this.props.employee.id)} className='float-left btn-list-btn' >Delete</Button>
         } else {
             viewEditDialogue = <EmployeeShowDialogue employee={this.props.employee} fte={this.props.fte} contracts={this.props.contracts} allocations={this.props.allocations} />

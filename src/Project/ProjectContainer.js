@@ -37,7 +37,13 @@ class ProjectContainer extends Component {
   }
 
   createAllocation = (allocation) => {
-    this.setState({allocations: _.concat(this.state.allocations, allocation)})
+    console.log(allocation)
+    this.setState({allocations: _.concat(this.state.allocations, allocation)}, () => {
+      let project = this.state.ps.find(project => project.id === allocation.projectId)
+      project = this.addAllocationsToProject(project)
+      console.log(project)
+      this.update(project)
+    })
   }
 
   update = (project) => {
@@ -47,6 +53,17 @@ class ProjectContainer extends Component {
   _delete = id => {
     projectService.remove(id)
     this.setState({ ps: _.reject(this.state.ps, { id: id }) })
+  }
+
+  deleteAllocation = id => {
+    let allocation = this.state.allocations.find(allocation => allocation.id === id)
+    let project = this.state.ps.find(project => project.id === allocation.projectId)
+    allocationService.remove(id).then(e => {
+      this.setState({ allocations: _.reject(this.state.allocations, { id: id }) }, () => {
+        project.allocations = _.reject(project.allocations, { id: id })
+        this.update(project)
+      })
+    })
   }
 
   addAllocationsToProject = (project) => {
@@ -79,7 +96,7 @@ class ProjectContainer extends Component {
     return <div>
       <ProjectCreateDialogue create={this.create} pms={this.state.pms} projects={this.state.ps} />
       <h3>Projects</h3>
-      <ProjectTable update={this.update} _delete={this._delete} createAllocation={this.createAllocation} ps={this.state.ps} pms={this.state.pms} />
+      <ProjectTable update={this.update} _delete={this._delete} deleteAllocation={this.deleteAllocation} createAllocation={this.createAllocation} ps={this.state.ps} pms={this.state.pms} />
     </div>
   }
 }

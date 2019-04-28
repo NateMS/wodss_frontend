@@ -5,6 +5,10 @@ import { authenticationService } from '../Services/Authentication.service'
 
 class AllocationTable extends Component {
 
+    deleteAllocation = () => {
+        
+    }
+
     render() {
 
         let actionHeader, nameColumn, projectColumn
@@ -35,6 +39,7 @@ class AllocationTable extends Component {
                                 editable={this.props.editable}
                                 nameColumn={this.props.nameColumn}
                                 projectColumn={this.props.projectColumn}
+                                deleteAllocation={this.props.deleteAllocation}
                             />
 
                         })
