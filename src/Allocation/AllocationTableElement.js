@@ -9,22 +9,21 @@ class AllocationTableElement extends Component {
 
     render() {
 
-        let editable, nameColumn, projectColumn, deleteBtn
+        let editable, nameColumn, projectColumn, deleteBtn, btnRow
 
         if (this.props.allocation.project) {
             if (this.props.editable 
                 && (
                     (authenticationService.isPM() && this.props.allocation.project.projectManagerId === authenticationService.currentUser.id) 
                     || authenticationService.isAdmin())) {
-                editable = <td>
-                    <AllocationUpdateDialogue allocation={this.props.allocation} update={this.props.update} />
-                </td>
+                editable = <AllocationUpdateDialogue allocation={this.props.allocation} update={this.props.update} />
                 deleteBtn = <Button color='danger' onClick={_.partial(this.props.deleteAllocation, this.props.allocation.id)} className='float-left btn-list-btn' >Delete</Button>
             }
         }
 
-        console.log(this.props.allocation)
-       
+        if (this.props.editable) {
+            btnRow = <td>{editable}{deleteBtn}</td>
+        }
 
         if (this.props.nameColumn && this.props.allocation.employee) nameColumn = <td>{this.props.allocation.employee.firstName + " " + this.props.allocation.employee.lastName}</td>
         if (this.props.projectColumn && this.props.allocation.project) projectColumn = <td>{this.props.allocation.project.name}</td>
@@ -35,8 +34,7 @@ class AllocationTableElement extends Component {
             <td>{dateToReadable(this.props.allocation.startDate)}</td>
             <td>{dateToReadable(this.props.allocation.endDate)}</td>
             <td>{this.props.allocation.pensumPercentage}</td>
-            {editable}
-            {deleteBtn}
+            {btnRow}
         </tr>
     }
 }
