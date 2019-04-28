@@ -4,7 +4,7 @@ import { projectService } from '../API/ProjectAPI'
 import { dateToTimestamp } from '../Helpers/DateHelper'
 import DatePicker from 'react-date-picker'
 
-class ProjectCreateDialog extends Component {
+class ProjectCreateDialogue extends Component {
 
   constructor(props) {
     super(props)
@@ -126,4 +126,4 @@ class ProjectCreateDialog extends Component {
   }
 }
 
-export default ProjectCreateDialog
+export default ProjectCreateDialogue

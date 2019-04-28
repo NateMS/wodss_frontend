@@ -3,7 +3,7 @@ import { Button, Modal, ModalBody, ModalHeader, Col, Row } from 'reactstrap'
 import { dateToReadable } from '../Helpers/DateHelper'
 import AllocationTable from '../Allocation/AllocationTable';
 
-class ProjectShowDialog extends Component {
+class ProjectShowDialogue extends Component {
 
     constructor(props) {
         super(props)
@@ -61,4 +61,4 @@ class ProjectShowDialog extends Component {
       }    
 }
 
-export default ProjectShowDialog
+export default ProjectShowDialogue
