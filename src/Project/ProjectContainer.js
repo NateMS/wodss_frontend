@@ -18,16 +18,14 @@ class ProjectContainer extends Component {
     let self = this
     employeeService.getAll('PROJECTMANAGER').then(prmngs => this.setState({ pms: prmngs }));
     allocationService.getAll().then(allocations => {
-      this.setState({ allocations: allocations })
-      projectService.getAll()
-      .then(projects => {
-        projects = projects.map(project => {
-          return self.addAllocationsToProject(project)
+      this.setState({ allocations: allocations }, () => {
+        projectService.getAll()
+        .then(projects => {
+          projects.map(project => self.addAllocationsToProject(project))
+          self.setState({ ps: projects })
         })
-        self.setState({ ps: projects })
       })
     });
-
   }
 
   generateIndex = projects =>
@@ -40,17 +38,14 @@ class ProjectContainer extends Component {
   createAllocation = (allocation) => {
     this.setState({ allocations: _.concat(this.state.allocations, allocation) }, () => {
       let project = this.state.ps.find(project => project.id === allocation.projectId)
-      project = this.addAllocationsToProject(project)
-      this.update(project)
+      this.addAllocationsToProject(project)
     })
   }
 
   updateAllocation = (allocation) => {
     this.setState({ allocations: _.map(this.state.allocations, a => a.id === allocation.id ? allocation : a) }, () => {
       let project = this.state.ps.find(project => project.id === allocation.projectId)
-      project = this.addAllocationsToProject(project)
-      console.log(project.allocations)
-      this.update(project)
+      this.addAllocationsToProject(project)
     })
   }
 
@@ -77,11 +72,7 @@ class ProjectContainer extends Component {
   addAllocationsToProject = (project) => {
     project.allocations = this.state.allocations.filter(allocation => allocation.projectId === project.id);
     if (!project.allocations) project.allocations = [];
-    project.allocations = project.allocations.map(allocation => {
-      this.addContractToAllocation(allocation)
-      return allocation
-    });
-    return project;
+    Promise.all(project.allocations.map(allocation => this.addContractToAllocation(allocation))).then(e=>this.update(project))
   }
 
   addContractToAllocation = (allocation) => {

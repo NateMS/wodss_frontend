@@ -43,8 +43,8 @@ class AllocationUpdateDialogue extends Component {
         allocationService.update(allocation)
           .then(allocation => {
             allocation.project = this.props.allocation.project
-            self.props.update(allocation)
             self.close()
+            self.props.update(allocation)
           })
     }
     render() {
