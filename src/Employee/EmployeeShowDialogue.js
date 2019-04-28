@@ -36,19 +36,6 @@ class EmployeeShowDialogue extends Component {
     this.setState({ title: '', description: '', showModal: false })
   }
 
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value })
-  }
-
-  onSubmit = event => {
-    event.preventDefault()
-  }
-
-  create = (contract) => {
-    _.concat(this.props.contracts, contract)
-    // TODO probably does not work
-  }
-
   render() {
     return (
       <div>
@@ -76,7 +63,7 @@ class EmployeeShowDialogue extends Component {
               <Col md={10}>
                 {
                   this.getContracts(this.props.employee.id).map(contract => {
-                    return <ContractCollapse key={contract.id} contract={contract} />
+                    return <ContractCollapse key={contract.id} contract={contract} editable={false}/>
                   })
                 }
               </Col>

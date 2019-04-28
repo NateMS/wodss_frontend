@@ -40,11 +40,14 @@ class ContractCollapse extends Component {
             <Col md={12}>
                 <Button name="colllapseBtn" color="secondary" onClick={this.toggle}>{dateToReadable(this.props.contract.startDate)} - {dateToReadable(this.props.contract.endDate)} Pensum: {this.props.contract.pensumPercentage}%</Button>
                 <Collapse isOpen={this.state.collapse} >
-                    <Card>
-                        <CardBody>
-                            <AllocationTable allocations={this.state.allocations} employeeId={this.props.contract.employeeId} editable={true} projectColumn={true} contractId={this.props.contract.contractId} update={this.update} deleteAllocation={this.props.deleteAllocation}/>
-                        </CardBody>
-                    </Card>
+                    {(this.state.allocations.length > 0 &&
+                        <Card>
+                            <CardBody>
+                                <AllocationTable allocations={this.state.allocations} employeeId={this.props.contract.employeeId} editable={this.props.editable} projectColumn={true} contractId={this.props.contract.contractId} update={this.update} deleteAllocation={this.props.deleteAllocation} />
+                            </CardBody>
+                        </Card>
+                    ) || <h4>No allocations for this contract</h4>
+                    }
                 </Collapse>
             </Col>
 

@@ -144,7 +144,7 @@ class EmployeeUpdateDialogue extends Component {
                 </Row>
                 {
                   this.getContracts(this.props.employee.id).map(contract =>
-                    <ContractCollapse key={contract.id} contract={contract} deleteAllocation={this.props.deleteAllocation} />
+                    <ContractCollapse key={contract.id} contract={contract} editable={true} deleteAllocation={this.props.deleteAllocation} />
                   )
                 }
               </Container>

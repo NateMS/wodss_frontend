@@ -17,7 +17,9 @@ class AllocationTableElement extends Component {
                     (authenticationService.isPM() && this.props.allocation.project.projectManagerId === authenticationService.currentUser.id) 
                     || authenticationService.isAdmin())) {
                 editable = <AllocationUpdateDialogue allocation={this.props.allocation} update={this.props.update} />
-                deleteBtn = <Button color='danger' onClick={_.partial(this.props.deleteAllocation, this.props.allocation.id)} className='float-left btn-list-btn' >Delete</Button>
+                if (this.props.deleteAllocation) {
+                    deleteBtn = <Button color='danger' onClick={_.partial(this.props.deleteAllocation, this.props.allocation.id)} className='float-left btn-list-btn' >Delete</Button>
+                }
             }
         }
 
