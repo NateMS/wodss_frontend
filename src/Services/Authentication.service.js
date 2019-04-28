@@ -17,10 +17,19 @@ export const authenticationService = {
 };
 
 export function isAdmin() {
-    return currentUserSubject.value.decoded.role === 'ADMINISTRATOR'
+    if (currentUserSubject.value) {
+        if (currentUserSubject.value.decoded) {
+            return currentUserSubject.value.decoded.role === 'ADMINISTRATOR'
+        }
+    }
+    return false;
 }
 export function isPM() {
-    return currentUserSubject.value.decoded.role === 'PROJECTMANAGER' || this.isAdmin()
+    if (currentUserSubject.value) {
+        if (currentUserSubject.value.decoded) {
+            return currentUserSubject.value.decoded.role === 'PROJECTMANAGER' || this.isAdmin()
+        }
+    }
 }
 export function currentUserValue() {
     return currentUserSubject.value

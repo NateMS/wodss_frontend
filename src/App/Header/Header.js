@@ -3,6 +3,7 @@ import './Header.css';
 
 import { authenticationService } from './../../Services/Authentication.service'
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { zip } from "rxjs";
 
 class Header extends Component {
   constructor(props) {
@@ -22,8 +23,12 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
-    this.setState({name: authenticationService.currentUserValue().decoded.firstName + " " + authenticationService.currentUserValue().decoded.lastName})
+    authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }, () => {
+      if (x.decoded) {
+        this.setState({name: x.decoded.firstName + " " + x.decoded.lastName})
+      }
+    }));
+    
   }
 
   logout(e) {

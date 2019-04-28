@@ -19,16 +19,21 @@ export function handleResponse(response) {
 
         let json = response.json().then(json => {
             if (response.status === 201) {
-                toast.success("Successfully created!", toastSettings)
+                if (json.token) {
+                    toast.success("Successfully logged in!", toastSettings)
+                } else {
+                    toast.success("Successfully created!", toastSettings)
+                }
             }
             return json
         });
-        
+
         return json
     } else {
         const error = response.text()
-        console.log(error);
+
         error.then(e => {
+            console.log(e);
             let message = e
             if (!message) message = response.status + " - " + response.statusText
             try {
