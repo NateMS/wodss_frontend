@@ -68,10 +68,8 @@ class ProjectContainer extends Component {
   addAllocationsToProject = (project) => {
     project.allocations = this.state.allocations.filter(allocation => allocation.projectId === project.id);
     if (!project.allocations) project.allocations = [];
-    project.usedFTE = 0
     project.allocations = project.allocations.map(allocation => {
       this.addContractToAllocation(allocation)
-      project.usedFTE += allocation.pensumPercentage
       return allocation
     });
     return project;

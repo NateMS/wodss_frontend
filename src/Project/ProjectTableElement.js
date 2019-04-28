@@ -26,7 +26,7 @@ class ProjectTableElement extends Component {
                 <td>{dateToReadable(this.props.project.startDate)}</td>
                 <td>{dateToReadable(this.props.project.endDate)}</td>
                 <td>{this.props.project.pm.firstName + " " + this.props.project.pm.lastName}</td>
-                <td>{this.props.project.usedFTE} / {this.props.project.ftePercentage}</td>
+                <td>{this.props.project.ftePercentage}</td>
                 <td><ProjectShowDialogue project={this.props.project} />
                     {projectUpdate}
                     {projectDelete}</td>

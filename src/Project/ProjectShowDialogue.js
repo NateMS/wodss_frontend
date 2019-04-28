@@ -44,7 +44,7 @@ class ProjectShowDialog extends Component {
                   </Col>
                   <Col md={12}>
                     <p>
-                      FTE: {this.props.project.usedFTE} / {this.props.project.ftePercentage}
+                      FTE: {this.props.project.ftePercentage}
                     </p>
                   </Col>
                 </Row>
