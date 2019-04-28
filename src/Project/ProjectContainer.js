@@ -94,7 +94,7 @@ class ProjectContainer extends Component {
 
   render() {
     return <div>
-      <ProjectCreateDialogue create={this.create} pms={this.state.pms} projects={this.state.ps} />
+      <ProjectCreateDialogue create={this.create} pms={this.state.pms} />
       <h3>Projects</h3>
       <ProjectTable update={this.update} _delete={this._delete} deleteAllocation={this.deleteAllocation} createAllocation={this.createAllocation} ps={this.state.ps} pms={this.state.pms} />
     </div>
