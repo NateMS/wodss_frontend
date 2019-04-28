@@ -32,6 +32,7 @@ class ProjectContainer extends Component {
     _.get(_.last(projects), 'id', 0) + 1
 
   create = (project) => {
+    project.allocations = []
     this.setState({ ps: _.concat(this.state.ps, project) })
   }
 
