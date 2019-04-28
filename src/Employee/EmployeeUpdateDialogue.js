@@ -45,15 +45,16 @@ class EmployeeUpdateDialogue extends Component {
   }
 
   close = () => {
-    this.setState({ active: this.props.employee.active,
+    this.setState({
+      active: this.props.employee.active,
       firstName: this.props.employee.firstName,
       lastName: this.props.employee.lastName,
       emailAddress: this.props.employee.emailAddress,
-       showModal: false })
+      showModal: false
+    })
   }
 
   onChange = event => {
-    console.log(this.state.active)
     this.setState({ [event.target.name]: event.target.value })
   }
 
@@ -73,7 +74,8 @@ class EmployeeUpdateDialogue extends Component {
     }
     let self = this
     employeeService.update(employee)
-      .then(employee => {self.props.update(employee)
+      .then(employee => {
+        self.props.update(employee)
         this.close()
       })
 
@@ -142,7 +144,7 @@ class EmployeeUpdateDialogue extends Component {
                 </Row>
                 {
                   this.getContracts(this.props.employee.id).map(contract =>
-                    <ContractCollapse key={contract.id} contract={contract} deleteAllocation={this.props.deleteAllocation}/>
+                    <ContractCollapse key={contract.id} contract={contract} deleteAllocation={this.props.deleteAllocation} />
                   )
                 }
               </Container>

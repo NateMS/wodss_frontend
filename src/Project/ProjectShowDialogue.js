@@ -51,7 +51,7 @@ class ProjectShowDialog extends Component {
                 <Row>
                   <Col md={12}>
                     <h4>Assigned Developers</h4>
-                    <AllocationTable allocations={this.props.project.allocations} nameColumn={true}/>
+                    <AllocationTable allocations={this.props.project.allocations} editable={false} nameColumn={true}/>
                   </Col>
                 </Row>
               </ModalBody>

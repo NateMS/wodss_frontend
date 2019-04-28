@@ -38,11 +38,9 @@ class ProjectContainer extends Component {
   }
 
   createAllocation = (allocation) => {
-    console.log(allocation)
     this.setState({allocations: _.concat(this.state.allocations, allocation)}, () => {
       let project = this.state.ps.find(project => project.id === allocation.projectId)
       project = this.addAllocationsToProject(project)
-      console.log(project)
       this.update(project)
     })
   }
@@ -68,7 +66,6 @@ class ProjectContainer extends Component {
   }
 
   addAllocationsToProject = (project) => {
-    console.log(this.state.allocations)
     project.allocations = this.state.allocations.filter(allocation => allocation.projectId === project.id);
     if (!project.allocations) project.allocations = [];
     project.usedFTE = 0

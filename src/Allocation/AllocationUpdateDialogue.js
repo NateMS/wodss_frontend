@@ -50,7 +50,7 @@ class AllocationUpdateDialogue extends Component {
     render() {
         return (
           <div>
-            <Button color="primary" onClick={this.open} className='float-right' >Edit Allocation</Button>
+            <Button color="primary" onClick={this.open} className='float-left btn-list-btn' >Edit Allocation</Button>
             <Modal isOpen={this.state.showModal} toggle={this.close} size="lg" 
                         autoFocus={false}>
               <ModalHeader toggle={this.close} >

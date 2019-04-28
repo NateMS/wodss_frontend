@@ -36,14 +36,13 @@ export function login(email, password) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials)
     };
-    
+
     return fetch(`${url}/token`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             let decoded = jwt_decode(user.token);
             let item = JSON.stringify({ decoded: decoded.employee, token: user.token });
-            console.log(item)
             localStorage.setItem('currentUser', item);
             currentUserSubject.next(item);
             return item;
