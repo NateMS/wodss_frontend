@@ -6,6 +6,7 @@ import { contractService } from '../API/ContractAPI'
 import { allocationService } from '../API/AllocationAPI'
 import ProjectTable from './ProjectTable'
 import ProjectCreateDialogue from './ProjectCreateDialogue'
+import { authenticationService } from '../Services/Authentication.service';
 
 
 class ProjectContainer extends Component {
@@ -93,8 +94,11 @@ class ProjectContainer extends Component {
   }
 
   render() {
+    let projectCreateDialogue
+    if(authenticationService.isAdmin()) projectCreateDialogue = <ProjectCreateDialogue create={this.create} pms={this.state.pms} />
+
     return <div>
-      <ProjectCreateDialogue create={this.create} pms={this.state.pms} />
+      {projectCreateDialogue}
       <h3>Projects</h3>
       <ProjectTable update={this.update} _delete={this._delete} deleteAllocation={this.deleteAllocation} createAllocation={this.createAllocation} ps={this.state.ps} pms={this.state.pms} />
     </div>
