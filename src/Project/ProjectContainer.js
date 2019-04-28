@@ -12,7 +12,16 @@ class ProjectContainer extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { ps: [], pms: [], allocations: []}
+    this.state = { ps: [], pms: [], allocations: [] }
+    employeeService.getAll('PROJECTMANAGER').then(prmngs => this.setState({ pms: prmngs }));
+    allocationService.getAll().then(allocations => this.setState({ allocations: allocations }));
+    projectService.getAll()
+      .then(projects => {
+        projects = projects.map(project => {
+          return this.addPmToProject(this.addAllocationsToProject(project))
+        })
+        this.setState({ ps: projects })
+      })
   }
 
   generateIndex = projects =>
@@ -29,18 +38,6 @@ class ProjectContainer extends Component {
   _delete = id => {
     projectService.remove(id)
     this.setState({ ps: _.reject(this.state.ps, { id: id }) })
-  }
-
-  componentDidMount() {
-    employeeService.getAll('PROJECTMANAGER').then(prmngs =>  this.setState({ pms: prmngs }));
-    allocationService.getAll().then(allocations =>  this.setState({ allocations: allocations }));
-    projectService.getAll()
-      .then(projects => {
-          projects = projects.map(project => {
-            return this.addPmToProject(this.addAllocationsToProject(project))
-          })
-          this.setState({ ps: projects })
-        })
   }
 
   addPmToProject = (project) => {
