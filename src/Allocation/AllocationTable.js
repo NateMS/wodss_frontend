@@ -7,16 +7,19 @@ class AllocationTable extends Component {
 
     render() {
         
-        let actionHeader, nameColumn
+        let actionHeader, nameColumn, projectColumn
         if(this.props.editable && authenticationService.isPM()) actionHeader = <th>Actions</th>
 
+        
         if (this.props.nameColumn) nameColumn = <th>Actions</th>
+        if (this.props.projectColumn) projectColumn = <th>Project</th>
 
         return <section>
             <Table>
                 <thead>
                     <tr>
                         {nameColumn}
+                        {projectColumn}
                         <th>Start</th>
                         <th>End</th>
                         <th>Pensum</th>
@@ -33,6 +36,7 @@ class AllocationTable extends Component {
                                 update={this.props.update}
                                 editable={this.props.editable}
                                 nameColumn={this.props.nameColumn}
+                                projectColumn={this.props.projectColumn}
                             />
 
                         })

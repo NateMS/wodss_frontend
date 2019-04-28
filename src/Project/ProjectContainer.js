@@ -13,8 +13,6 @@ class ProjectContainer extends Component {
   constructor(props) {
     super(props)
     this.state = { ps: [], pms: [], allocations: []}
-    employeeService.getAll('PROJECTMANAGER').then(prmngs =>  this.setState({ pms: prmngs }));
-    allocationService.getAll().then(allocations =>  this.setState({ allocations: allocations }));
   }
 
   generateIndex = projects =>
@@ -34,6 +32,8 @@ class ProjectContainer extends Component {
   }
 
   componentDidMount() {
+    employeeService.getAll('PROJECTMANAGER').then(prmngs =>  this.setState({ pms: prmngs }));
+    allocationService.getAll().then(allocations =>  this.setState({ allocations: allocations }));
     projectService.getAll()
       .then(projects => {
           projects = projects.map(project => {

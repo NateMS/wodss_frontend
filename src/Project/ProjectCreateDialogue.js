@@ -12,7 +12,15 @@ class ProjectCreateDialog extends Component {
   }
 
   open = () => {
-    this.setState({ projectManagerId: this.props.pms[0].id, showModal: true })
+    if (this.props.pms) {
+      this.setState({ projectManagerId: this.props.pms[0].id, showModal: true })
+    } else {
+      this.setState({ showModal: true })
+    }
+  }
+
+  componentDidMount() {
+   // this.setState({ projectManagerId: this.props.pms[0].id })
   }
 
   close = () => {

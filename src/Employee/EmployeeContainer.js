@@ -6,7 +6,6 @@ import { allocationService } from "../API/AllocationAPI";
 import EmployeeCreateDialogue from './EmployeeCreateDialogue'
 import EmployeeTable from './EmployeeTable'
 import {authenticationService} from '../Services/Authentication.service'
-import { Route, Redirect } from 'react-router-dom';
 
 class EmployeeContainer extends Component {
 
@@ -39,8 +38,6 @@ class EmployeeContainer extends Component {
         this.setState({allocations: allocations})
       }
     )
-
-
   }
 
   getFTE(employeeId){

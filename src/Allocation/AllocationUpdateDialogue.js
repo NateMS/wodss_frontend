@@ -20,7 +20,7 @@ class AllocationUpdateDialogue extends Component {
     }
 
     close = () => {
-      this.clear()
+      this.setState({showModal: false})
     }
 
     onChange = event => {
@@ -39,23 +39,14 @@ class AllocationUpdateDialogue extends Component {
           id: this.props.allocation.id
         }
         
+        let self = this
         allocationService.update(allocation)
           .then(allocation => {
-            console.log(allocation)
-            this.props.update(allocation)
-            this.clear()
+            allocation.project = this.props.allocation.project
+            self.props.update(allocation)
+            self.close()
           })
     }
-
-    clear = () => {
-      this.setState({ 
-        startDate: this.props.allocation.startDate,
-        endDate: this.props.allocation.endDate,
-        pensumPercentage: this.props.allocation.pensumPercentage,
-        showModal: false
-      })
-    }
-
     render() {
         return (
           <div>

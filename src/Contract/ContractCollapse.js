@@ -42,7 +42,7 @@ class ContractCollapse extends Component {
                 <Collapse isOpen={this.state.collapse} >
                     <Card>
                         <CardBody>
-                            <AllocationTable allocations={this.state.allocations} employeeId={this.props.contract.employeeId} editable={true} contractId={this.props.contract.contractId} update={this.update} />
+                            <AllocationTable allocations={this.state.allocations} employeeId={this.props.contract.employeeId} editable={true} projectColumn={true} contractId={this.props.contract.contractId} update={this.update} />
                         </CardBody>
                     </Card>
                 </Collapse>
