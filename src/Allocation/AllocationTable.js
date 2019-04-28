@@ -1,17 +1,15 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { Table } from 'reactstrap'
 import AllocationTableElement from './AllocationTableElement'
-import {authenticationService} from '../Services/Authentication.service'
+import { authenticationService } from '../Services/Authentication.service'
 
 class AllocationTable extends Component {
 
     render() {
-        
-        let actionHeader, nameColumn, projectColumn
-        if(this.props.editable && authenticationService.isPM()) actionHeader = <th>Actions</th>
 
-        
-        if (this.props.nameColumn) nameColumn = <th>Actions</th>
+        let actionHeader, nameColumn, projectColumn
+        if (this.props.editable && authenticationService.isPM()) actionHeader = <th>Actions</th>
+        if (this.props.nameColumn) nameColumn = <th>Name</th>
         if (this.props.projectColumn) projectColumn = <th>Project</th>
 
         return <section>
