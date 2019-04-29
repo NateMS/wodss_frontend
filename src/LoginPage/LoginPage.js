@@ -1,6 +1,7 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { Redirect } from 'react-router-dom';
 
 import { authenticationService } from '../Services/Authentication.service';
 
@@ -36,8 +37,8 @@ class LoginPage extends React.Component {
                         authenticationService.login(email, password)
                             .then(
                                 user => {
-                                    const { from } = this.props.location.state || { from: { pathname: "/" } };
-                                    this.props.history.push(from);
+                                    window.location.reload()
+                                    this.props.history.push({ from: { pathname: "/" } })
                                 },
                                 error => {
                                     setSubmitting(false);
