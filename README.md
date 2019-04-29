@@ -1,4 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+setting up: 
+```
+npm install
+npm start
+```
+
+the port for the backend can be found in the .env file
+
 
 ## Available Scripts
 
