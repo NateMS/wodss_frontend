@@ -6,6 +6,7 @@ import { allocationService } from "../API/AllocationAPI";
 import EmployeeCreateDialogue from './EmployeeCreateDialogue'
 import EmployeeTable from './EmployeeTable'
 import { authenticationService } from '../Services/Authentication.service'
+import { Redirect } from 'react-router-dom';
 
 class EmployeeContainer extends Component {
 
@@ -79,6 +80,10 @@ class EmployeeContainer extends Component {
 
     if (authenticationService.isAdmin()) {
       createDialogue = <EmployeeCreateDialogue create={this.create} />
+    }
+
+    if (!(authenticationService.isAdmin() && authenticationService.isPM())) {
+      return <Redirect to={{ pathname: '/projects/'}} />
     }
 
     return <div>
