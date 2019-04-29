@@ -82,10 +82,6 @@ class EmployeeContainer extends Component {
       createDialogue = <EmployeeCreateDialogue create={this.create} />
     }
 
-    if (!(authenticationService.isAdmin() && authenticationService.isPM())) {
-      return <Redirect to={{ pathname: '/projects/'}} />
-    }
-
     return <div>
       {createDialogue}
       <h3>Employees</h3>

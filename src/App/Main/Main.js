@@ -5,6 +5,7 @@ import { PrivateRoute } from './../../Components/PrivateRoute'
 import { LoginPage } from '../../LoginPage/LoginPage';
 import ProjectContainer from './../../Project/ProjectContainer';
 import EmployeeContainer from './../../Employee/EmployeeContainer';
+import { authenticationService } from '../../Services/Authentication.service'
 import './Main.css';
 import Me from '../Me/Me';
 
@@ -16,7 +17,11 @@ const Main = () => (
                 <Switch>
                     <Route path="/login" component={LoginPage}/>
                     <PrivateRoute path='/projects' component={ProjectContainer}/>
-                    <PrivateRoute path='/employees' component={EmployeeContainer}/>
+                    {
+                      (authenticationService.isAdmin() || authenticationService.isPM()) &&
+                      <PrivateRoute path='/employees' component={EmployeeContainer}/>
+                    }
+                   
                     <PrivateRoute path='/my-allocations' component={Me}/>
                     <PrivateRoute path='/' component={ProjectContainer}/>
                 </Switch>
