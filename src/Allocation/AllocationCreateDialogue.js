@@ -9,9 +9,11 @@ import { employeeService } from '../API/EmployeeAPI'
 class AllocationCreateDialogue extends Component {
     constructor(props) {
         super(props)
+        let today = new Date();
+        
         this.state = {
             startDate: new Date(),
-            endDate: new Date(),
+            endDate: today.setDate(today.getDate() + 1),
             pensumPercentage: '',
             employeeId: '',
             showModal: false,
@@ -91,9 +93,10 @@ class AllocationCreateDialogue extends Component {
     }
 
     clear = () => {
+        let today = new Date();
         this.setState({
             startDate: new Date(),
-            endDate: new Date(),
+            endDate: today.setDate(today.getDate() + 1),
             pensumPercentage: '',
             ContractDisplay: '',
             employeeId: 0,
@@ -114,14 +117,14 @@ class AllocationCreateDialogue extends Component {
                         <FormGroup row>
                             <Label md={2} for="startDate">Start Date</Label>
                             <Col md={10}>
-                                <DatePicker name="startDate" value={new Date(this.state.startDate)} onChange={e => this.onChange({ target: { name: 'startDate', value: e } })} />
+                                <DatePicker name="startDate"  minDate={new Date(this.props.project.startDate)} maxDate={new Date(this.props.project.endDate)} value={new Date(this.state.startDate)} onChange={e => this.onChange({ target: { name: 'startDate', value: e } })} />
                             </Col>
                         </FormGroup>
 
                         <FormGroup row>
                             <Label md={2} for="endDate">End Date</Label>
                             <Col md={10}>
-                                <DatePicker name="endDate" value={new Date(this.state.endDate)} onChange={e => this.onChange({ target: { name: 'endDate', value: e } })} />
+                                <DatePicker name="endDate" minDate={new Date(this.props.project.startDate)} maxDate={new Date(this.props.project.endDate)} value={new Date(this.state.endDate)} onChange={e => this.onChange({ target: { name: 'endDate', value: e } })} />
                             </Col>
                         </FormGroup>
 
