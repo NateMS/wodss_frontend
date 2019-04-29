@@ -20,7 +20,7 @@ class AllocationCreateDialogue extends Component {
             contract: '',
             contracts: [],
             employees: [],
-            contractDisplay: '',
+            ContractDisplay: '',
         }
     }
 
@@ -99,7 +99,7 @@ class AllocationCreateDialogue extends Component {
             endDate: today.setDate(today.getDate() + 1),
             pensumPercentage: '',
             ContractDisplay: '',
-            employeeId: 0,
+            employeeId: this.state.employees[0].id.toString(),
             showModal: false,
         })
     }
