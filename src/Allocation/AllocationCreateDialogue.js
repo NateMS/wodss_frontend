@@ -30,6 +30,7 @@ class AllocationCreateDialogue extends Component {
         )
         employeeService.getAll().then(
           employees => {
+            employees = employees.filter(employee => employee.firstName !== 'ANONYMIZED' && employee.lastName !== 'ANONYMIZED' )
             this.setState({employees: employees})
             this.setState({employeeId: employees[0].id.toString()})
           }
