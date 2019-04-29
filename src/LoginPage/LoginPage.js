@@ -19,7 +19,7 @@ class LoginPage extends React.Component {
         return (
             <div>
                 <div className="alert alert-info">
-                    admin@wodss.fhnw.ch<br />
+                    admin@wodss.fhnw.ch | developer@students.fhnw.ch | projectmanager@students.fhnw.ch<br />
                     secret
                 </div>
                 <h2>Login</h2>
