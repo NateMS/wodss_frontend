@@ -52,14 +52,8 @@ class EmployeeCreateDialogue extends Component {
     let role = ''
 
     switch (this.state.rSelected) {
-      case 1:
-        role = 'DEVELOPER'
-        break;
       case 2:
         role = 'PROJECTMANAGER'
-        break;
-      case 3:
-        role = 'ADMINISTRATOR'
         break;
       default:
         role = 'DEVELOPER'
@@ -145,7 +139,6 @@ class EmployeeCreateDialogue extends Component {
                   <ButtonGroup>
                     <Button color="primary" onClick={() => this.onRadioBtnClick(1)} active={this.state.rSelected === 1}>Developer</Button>
                     <Button color="primary" onClick={() => this.onRadioBtnClick(2)} active={this.state.rSelected === 2}>Project Manager</Button>
-                    <Button color="primary" onClick={() => this.onRadioBtnClick(3)} active={this.state.rSelected === 3}>Administrator</Button>
                   </ButtonGroup>
                 </Col>
               </FormGroup>
